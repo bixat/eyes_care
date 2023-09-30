@@ -76,8 +76,7 @@ class _CountdownScreenState extends State<CountdownScreen> {
       importance: Importance.max,
       priority: Priority.high,
     );
-    const iOSPlatformChannelSpecifics =
-        DarwinNotificationDetails();
+    const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
     const platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         macOS: iOSPlatformChannelSpecifics,
@@ -101,7 +100,22 @@ class _CountdownScreenState extends State<CountdownScreen> {
           child: RocketTimerBuilder(
         timer: _timer,
         builder: (BuildContext context) {
-          return Text(_timer.formattedDuration);
+          return Stack(
+            children: [
+              Center(child: Text(_timer.formattedDuration)),
+              Center(
+                child: SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.grey[300],
+                    strokeWidth: 10,
+                    value: _timer.kDuration / 20,
+                  ),
+                ),
+              )
+            ],
+          );
         },
       )),
     );
