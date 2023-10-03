@@ -27,8 +27,8 @@ class KeepYourEyes extends StatelessWidget {
   }
 }
 
-const int minutes = 20;
-const duration = Duration(minutes: minutes);
+const int rule = 20;
+const duration = Duration(minutes: rule);
 
 class CountdownScreen extends StatefulWidget {
   const CountdownScreen({super.key});
@@ -53,7 +53,7 @@ class _CountdownScreenState extends State<CountdownScreen> {
     _timer.addListener(() {
       if (_timer.kDuration == 0) {
         showNotification('Yaay Keep your eyes');
-        _timer.kDuration = inProgress ? minutes : duration.inSeconds;
+        _timer.kDuration = inProgress ? duration.inSeconds : rule;
         inProgress = !inProgress;
       }
     });
