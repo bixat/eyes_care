@@ -36,6 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_local_notifications: ^15.1.1
+  desktop_window: ^0.4.0
   rocket_timer:
     path: ../rocket_timer
 
