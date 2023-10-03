@@ -1,18 +1,24 @@
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rocket_timer/rocket_timer.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  const Size size = Size(300, 300);
+  DesktopWindow.setMinWindowSize(size);
+  DesktopWindow.setWindowSize(size);
+  DesktopWindow.setMaxWindowSize(size);
   runApp(const KeepYourEyes());
 }
 
 class KeepYourEyes extends StatelessWidget {
   const KeepYourEyes({super.key});
-
+  // TODO : name from 20 min 20 sec 20 m
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Countdown App',
+      title: 'KeepYourEyes',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -20,6 +26,9 @@ class KeepYourEyes extends StatelessWidget {
     );
   }
 }
+
+const int minutes = 20;
+const duration = Duration(minutes: minutes);
 
 class CountdownScreen extends StatefulWidget {
   const CountdownScreen({super.key});
@@ -31,7 +40,7 @@ class CountdownScreen extends StatefulWidget {
 class _CountdownScreenState extends State<CountdownScreen> {
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   late RocketTimer _timer;
-
+  bool inProgress = false;
   @override
   void initState() {
     super.initState();
@@ -40,12 +49,12 @@ class _CountdownScreenState extends State<CountdownScreen> {
   }
 
   void initTimer() {
-    _timer = RocketTimer(
-        type: TimerType.countdown, duration: const Duration(seconds: 20));
+    _timer = RocketTimer(type: TimerType.countdown, duration: duration);
     _timer.addListener(() {
-      if (_timer.seconds == 0 && _timer.minutes == 0) {
-        showNotification('countdown finisghed');
-        _timer.restart();
+      if (_timer.kDuration == 0) {
+        showNotification('Yaay Keep your eyes');
+        _timer.kDuration = inProgress ? minutes : duration.inSeconds;
+        inProgress = !inProgress;
       }
     });
     _timer.start();
@@ -71,8 +80,8 @@ class _CountdownScreenState extends State<CountdownScreen> {
 
   void showNotification(String body) async {
     const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'countdown_app_channel',
-      'Countdown App Channel',
+      'keep_your_eyes',
+      'Keep your eyes',
       importance: Importance.max,
       priority: Priority.high,
     );
@@ -83,10 +92,10 @@ class _CountdownScreenState extends State<CountdownScreen> {
         iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
       0,
-      'Countdown Notification',
+      'Keep your eyes',
       body,
       platformChannelSpecifics,
-      payload: 'countdown_app_notification',
+      payload: 'keep_your_eyes',
     );
   }
 
@@ -94,23 +103,47 @@ class _CountdownScreenState extends State<CountdownScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Countdown App'),
+        title: const Text('KeepYourEyes'),
+        leading: AnimatedBuilder(
+            animation: _timer,
+            builder: (context, _) {
+              return IconButton(
+                icon: Icon(_timer.status == TimerStatus.pause
+                    ? Icons.play_arrow
+                    : Icons.pause),
+                onPressed: () {
+                  if (_timer.status == TimerStatus.pause) {
+                    _timer.start();
+                  } else {
+                    _timer.pause();
+                  }
+                },
+              );
+            }),
       ),
       body: Center(
           child: RocketTimerBuilder(
         timer: _timer,
         builder: (BuildContext context) {
+          List splited = _timer.formattedDuration.split(":");
+          splited.removeAt(0);
           return Stack(
             children: [
-              Center(child: Text(_timer.formattedDuration)),
+              Center(
+                child: Text(
+                  splited.join(':'),
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
               Center(
                 child: SizedBox(
                   height: 100,
                   width: 100,
                   child: CircularProgressIndicator(
+                    color: inProgress ? Colors.orange : Colors.blue,
                     backgroundColor: Colors.grey[300],
                     strokeWidth: 10,
-                    value: _timer.kDuration / 20,
+                    value: _timer.kDuration / _timer.duration.inSeconds,
                   ),
                 ),
               )
