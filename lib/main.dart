@@ -9,16 +9,16 @@ void main() {
   DesktopWindow.setMinWindowSize(size);
   DesktopWindow.setWindowSize(size);
   DesktopWindow.setMaxWindowSize(size);
-  runApp(const KeepYourEyes());
+  runApp(const CareYourEyes());
 }
 
-class KeepYourEyes extends StatelessWidget {
-  const KeepYourEyes({super.key});
+class CareYourEyes extends StatelessWidget {
+  const CareYourEyes({super.key});
   // TODO : name from 20 min 20 sec 20 m
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'KeepYourEyes',
+      title: 'CareYourEyes',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -52,7 +52,7 @@ class _CountdownScreenState extends State<CountdownScreen> {
     _timer = RocketTimer(type: TimerType.countdown, duration: duration);
     _timer.addListener(() {
       if (_timer.kDuration == 0) {
-        showNotification('Yaay Keep your eyes');
+        showNotification('Yaay Care your eyes');
         _timer.kDuration = inProgress ? duration.inSeconds : rule;
         inProgress = !inProgress;
       }
@@ -80,7 +80,7 @@ class _CountdownScreenState extends State<CountdownScreen> {
 
   void showNotification(String body) async {
     const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'keep_your_eyes',
+      'care_your_eyes',
       'Keep your eyes',
       importance: Importance.max,
       priority: Priority.high,
@@ -95,7 +95,7 @@ class _CountdownScreenState extends State<CountdownScreen> {
       'Keep your eyes',
       body,
       platformChannelSpecifics,
-      payload: 'keep_your_eyes',
+      payload: 'care_your_eyes',
     );
   }
 
@@ -103,7 +103,7 @@ class _CountdownScreenState extends State<CountdownScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('KeepYourEyes'),
+        title: const Text('CareYourEyes'),
         leading: AnimatedBuilder(
             animation: _timer,
             builder: (context, _) {
