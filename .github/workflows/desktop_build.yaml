@@ -4,13 +4,13 @@ on:
     branches:
       - add-build-desktop-workflow
 #   Enable manual run
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "Tag to create (e.g. v2.10.0). Must include 'v' and must match pubspec"
-        required: true
-        default: "v2.10.0"
-        type: string
+#   workflow_dispatch:
+#     inputs:
+#       version:
+#         description: "Tag to create (e.g. v2.10.0). Must include 'v' and must match pubspec"
+#         required: true
+#         default: "v2.10.0"
+#         type: string
 
 # Declare default permissions as read only.
 permissions: read-all
