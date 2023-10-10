@@ -28,7 +28,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.event.inputs.version }} ?? "1.0.0"
+          tag_name: "v1.0.0"
           draft: true
           prerelease: false
           generate_release_notes: true
