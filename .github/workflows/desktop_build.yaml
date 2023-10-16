@@ -38,26 +38,26 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        target: [macOS, Windows, Linux]
+        target: [Windows]
         include:
-          - os: macos-latest
-            target: macOS
-            build_target: macos
-            build_path: build/macos/Build/Products/Release
-            asset_extension: .zip
-            asset_content_type: application/zip
+          # - os: macos-latest
+          #   target: macOS
+          #   build_target: macos
+          #   build_path: build/macos/Build/Products/Release
+          #   asset_extension: .zip
+          #   asset_content_type: application/zip
           - os: windows-latest
             target: Windows
             build_target: windows
             build_path: build\windows\runner\Release
             asset_extension: .zip
             asset_content_type: application/zip
-          - os: ubuntu-latest
-            target: Linux
-            build_target: linux
-            build_path: build/linux/x64/release/bundle
-            asset_extension: .tar.gz
-            asset_content_type: application/gzip
+          # - os: ubuntu-latest
+          #   target: Linux
+          #   build_target: linux
+          #   build_path: build/linux/x64/release/bundle
+          #   asset_extension: .tar.gz
+          #   asset_content_type: application/gzip
 
       # Disable fail-fast as we want results from all even if one fails.
       fail-fast: false
@@ -108,7 +108,6 @@ jobs:
       - name: Compress build for Windows
         if: matrix.target == 'Windows'
         run: compress-archive -Path * -DestinationPath ${env:GITHUB_WORKSPACE}\CareYourEyes${{ matrix.target }}.zip
-        working-directory: ${{ matrix.build_path }}
 
       # Upload the build.
       - name: Add packaged build to release draft
