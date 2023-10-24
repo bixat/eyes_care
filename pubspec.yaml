@@ -35,10 +35,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  flutter_local_notifications: ^15.1.1
   desktop_window: ^0.4.0
-  rocket_timer:
-    path: ../rocket_timer
+  rocket_timer: ^0.0.2
+  local_notifier: ^0.1.5
 
 dev_dependencies:
   flutter_test:
