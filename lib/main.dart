@@ -1,6 +1,6 @@
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:local_notifier/local_notifier.dart';
 import 'package:rocket_timer/rocket_timer.dart';
 
 void main() {
@@ -34,17 +34,15 @@ class CountdownScreen extends StatefulWidget {
   const CountdownScreen({super.key});
 
   @override
-  _CountdownScreenState createState() => _CountdownScreenState();
+  CountdownScreenState createState() => CountdownScreenState();
 }
 
-class _CountdownScreenState extends State<CountdownScreen> {
-  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+class CountdownScreenState extends State<CountdownScreen> {
   late RocketTimer _timer;
   bool inProgress = false;
   @override
   void initState() {
     super.initState();
-    initializeNotifications();
     initTimer();
   }
 
@@ -52,7 +50,7 @@ class _CountdownScreenState extends State<CountdownScreen> {
     _timer = RocketTimer(type: TimerType.countdown, duration: duration);
     _timer.addListener(() {
       if (_timer.kDuration == 0) {
-        showNotification('Yaay Care your eyes');
+        showNotification();
         _timer.kDuration = inProgress ? duration.inSeconds : rule;
         inProgress = !inProgress;
       }
@@ -66,41 +64,47 @@ class _CountdownScreenState extends State<CountdownScreen> {
     super.dispose();
   }
 
-  void initializeNotifications() {
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    const initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-    const initializationSettingsIOS = DarwinInitializationSettings();
-    const initializationSettings = InitializationSettings(
-        macOS: initializationSettingsIOS,
-        android: initializationSettingsAndroid,
-        iOS: initializationSettingsIOS);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings);
-  }
+  Future<void> showNotification() async {
+    // Add in main method.
+    await localNotifier.setup(
+      appName: 'CareYourEyes',
+      // The parameter shortcutPolicy only works on Windows
+      shortcutPolicy: ShortcutPolicy.requireCreate,
+    );
 
-  void showNotification(String body) async {
-    const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'care_your_eyes',
-      'Keep your eyes',
-      importance: Importance.max,
-      priority: Priority.high,
+    LocalNotification notification = LocalNotification(
+      title: "Care your eyes",
+      body: "rules 20 for care your eyes",
     );
-    const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
-    const platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics,
-        macOS: iOSPlatformChannelSpecifics,
-        iOS: iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-      0,
-      'Keep your eyes',
-      body,
-      platformChannelSpecifics,
-      payload: 'care_your_eyes',
-    );
+    notification.onShow = () {
+      print('onShow ${notification.identifier}');
+    };
+    notification.onClose = (closeReason) {
+      // Only supported on windows, other platforms closeReason is always unknown.
+      switch (closeReason) {
+        case LocalNotificationCloseReason.userCanceled:
+          // do something
+          break;
+        case LocalNotificationCloseReason.timedOut:
+          // do something
+          break;
+        default:
+      }
+      print('onClose ${notification.identifier} - $closeReason');
+    };
+    notification.onClick = () {
+      print('onClick ${notification.identifier}');
+    };
+    notification.onClickAction = (actionIndex) {
+      print('onClickAction ${notification.identifier} - $actionIndex');
+    };
+
+    notification.show();
   }
 
   @override
   Widget build(BuildContext context) {
+    showNotification();
     return Scaffold(
       appBar: AppBar(
         title: const Text('CareYourEyes'),
