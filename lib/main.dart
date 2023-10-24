@@ -27,17 +27,17 @@ class KeepYourEyes extends StatelessWidget {
   }
 }
 
-const int rule = 1;
+const int rule = 20;
 const duration = Duration(minutes: rule);
 
 class CountdownScreen extends StatefulWidget {
   const CountdownScreen({super.key});
 
   @override
-  _CountdownScreenState createState() => _CountdownScreenState();
+  CountdownScreenState createState() => CountdownScreenState();
 }
 
-class _CountdownScreenState extends State<CountdownScreen> {
+class CountdownScreenState extends State<CountdownScreen> {
   late RocketTimer _timer;
   bool inProgress = false;
   @override
