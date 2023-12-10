@@ -9,13 +9,13 @@ void main() {
   DesktopWindow.setMinWindowSize(size);
   DesktopWindow.setWindowSize(size);
   DesktopWindow.setMaxWindowSize(size);
-  runApp(const KeepYourEyes());
+  runApp(const CareYourEyes());
 }
 
 final themeNotifier = ValueNotifier(ThemeMode.light);
 
-class KeepYourEyes extends StatelessWidget {
-  const KeepYourEyes({super.key});
+class CareYourEyes extends StatelessWidget {
+  const CareYourEyes({super.key});
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
