@@ -12,18 +12,24 @@ void main() {
   runApp(const CareYourEyes());
 }
 
+final themeNotifier = ValueNotifier(ThemeMode.light);
+
 class CareYourEyes extends StatelessWidget {
   const CareYourEyes({super.key});
-  // TODO : name from 20 min 20 sec 20 m
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'CareYourEyes',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const CountdownScreen(),
-    );
+    return ValueListenableBuilder(
+        valueListenable: themeNotifier,
+        builder: (context, _, __) {
+          return MaterialApp(
+            title: 'Eyes Care',
+            debugShowCheckedModeBanner: false,
+            themeMode: themeNotifier.value,
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
+            home: const CountdownScreen(),
+          );
+        });
   }
 }
 
@@ -65,10 +71,8 @@ class CountdownScreenState extends State<CountdownScreen> {
   }
 
   Future<void> showNotification() async {
-    // Add in main method.
     await localNotifier.setup(
       appName: 'CareYourEyes',
-      // The parameter shortcutPolicy only works on Windows
       shortcutPolicy: ShortcutPolicy.requireCreate,
     );
 
@@ -80,13 +84,10 @@ class CountdownScreenState extends State<CountdownScreen> {
       print('onShow ${notification.identifier}');
     };
     notification.onClose = (closeReason) {
-      // Only supported on windows, other platforms closeReason is always unknown.
       switch (closeReason) {
         case LocalNotificationCloseReason.userCanceled:
-          // do something
           break;
         case LocalNotificationCloseReason.timedOut:
-          // do something
           break;
         default:
       }
@@ -104,10 +105,22 @@ class CountdownScreenState extends State<CountdownScreen> {
 
   @override
   Widget build(BuildContext context) {
-    showNotification();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('CareYourEyes'),
+        title: const Text('Eyes Care'),
+        actions: [
+          ValueListenableBuilder(
+              valueListenable: themeNotifier,
+              builder: (context, _, __) {
+                final isLight = themeNotifier.value.index == 1;
+                return IconButton(
+                    onPressed: () {
+                      themeNotifier.value =
+                          isLight ? ThemeMode.dark : ThemeMode.light;
+                    },
+                    icon: Icon(isLight ? Icons.dark_mode : Icons.light_mode));
+              })
+        ],
         leading: AnimatedBuilder(
             animation: _timer,
             builder: (context, _) {
