@@ -49,7 +49,7 @@ jobs:
           - os: windows-latest
             target: Windows
             build_target: windows
-            build_path: build/windows/x64/runner
+            build_path: build/windows/x64/runner/Release
             asset_extension: .zip
             asset_content_type: application/zip
           # - os: ubuntu-latest
