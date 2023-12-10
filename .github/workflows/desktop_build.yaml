@@ -38,26 +38,26 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        target: [macOS, Linux]
+        target: [Windows]
         include:
-          - os: macos-latest
-            target: macOS
-            build_target: macos
-            build_path: build/macos/Build/Products/Release
-            asset_extension: .zip
-            asset_content_type: application/zip
-          # - os: windows-latest
-          #   target: Windows
-          #   build_target: windows
-          #   build_path: build\windows\runner\Release
+          # - os: macos-latest
+          #   target: macOS
+          #   build_target: macos
+          #   build_path: build/macos/Build/Products/Release
           #   asset_extension: .zip
           #   asset_content_type: application/zip
-          - os: ubuntu-latest
-            target: Linux
-            build_target: linux
-            build_path: build/linux/x64/release/bundle
-            asset_extension: .tar.gz
-            asset_content_type: application/gzip
+          - os: windows-latest
+            target: Windows
+            build_target: windows
+            build_path: build\windows\runner\Release
+            asset_extension: .zip
+            asset_content_type: application/zip
+          # - os: ubuntu-latest
+          #   target: Linux
+          #   build_target: linux
+          #   build_path: build/linux/x64/release/bundle
+          #   asset_extension: .tar.gz
+          #   asset_content_type: application/gzip
           # - os: ubuntu-latest
           #   target: Android
           #   build_target: apk
@@ -92,12 +92,17 @@ jobs:
       - run: flutter build -v ${{ matrix.build_target }} --release
 
       # Package the build.
-      - name: Copy VC redistributables to release directory for Windows
-        if: matrix.target == 'Windows'
+      - name: Copy DLLs
         run: |
-          Copy-Item (vswhere -latest -find 'VC\Redist\MSVC\*\x64\*\msvcp140.dll') .
-          Copy-Item (vswhere -latest -find 'VC\Redist\MSVC\*\x64\*\vcruntime140.dll') .
-          Copy-Item (vswhere -latest -find 'VC\Redist\MSVC\*\x64\*\vcruntime140_1.dll') .
+          $dlls = vswhere -latest -find 'VC\Redist\MSVC\*\x64\*\msvcp140.dll', 'VC\Redist\MSVC\*\x64\*\vcruntime140.dll', 'VC\Redist\MSVC\*\x64\*\vcruntime140_1.dll'
+          foreach ($dll in $dlls) {
+            if (Test-Path $dll) {
+              Copy-Item $dll -Destination .
+            } else {
+              Write-Error "File $dll does not exist"
+            }
+          }
+        shell: pwsh
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for Linux
         if: matrix.target == 'Linux'
