@@ -2,7 +2,7 @@ name: Draft Github Release
 on:
   push:
     branches:
-      - add-build-desktop-workflow
+      - master
   # Enable manual run
   # workflow_dispatch:
   #   inputs:
@@ -28,7 +28,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
-          tag_name: v0.0.1
+          tag_name: v0.0.1-beta
           draft: true
           prerelease: false
           generate_release_notes: true
@@ -38,26 +38,26 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        target: [Windows]
+        target: [macOS, Windows, Linux]
         include:
-          # - os: macos-latest
-          #   target: macOS
-          #   build_target: macos
-          #   build_path: build/macos/Build/Products/Release
-          #   asset_extension: .zip
-          #   asset_content_type: application/zip
+          - os: macos-latest
+            target: macOS
+            build_target: macos
+            build_path: build/macos/Build/Products/Release
+            asset_extension: .zip
+            asset_content_type: application/zip
           - os: windows-latest
             target: Windows
             build_target: windows
             build_path: build/windows/x64/runner/Release
             asset_extension: .zip
             asset_content_type: application/zip
-          # - os: ubuntu-latest
-          #   target: Linux
-          #   build_target: linux
-          #   build_path: build/linux/x64/release/bundle
-          #   asset_extension: .tar.gz
-          #   asset_content_type: application/gzip
+          - os: ubuntu-latest
+            target: Linux
+            build_target: linux
+            build_path: build/linux/x64/release/bundle
+            asset_extension: .tar.gz
+            asset_content_type: application/gzip
           # - os: ubuntu-latest
           #   target: Android
           #   build_target: apk
