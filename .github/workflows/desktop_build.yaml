@@ -49,7 +49,7 @@ jobs:
           - os: windows-latest
             target: Windows
             build_target: windows
-            build_path: build\windows\runner\Release
+            build_path: build/windows/x64/runner
             asset_extension: .zip
             asset_content_type: application/zip
           # - os: ubuntu-latest
@@ -98,7 +98,7 @@ jobs:
           Copy-Item (vswhere -latest -find 'VC\Redist\MSVC\*\x64\*\msvcp140.dll') .
           Copy-Item (vswhere -latest -find 'VC\Redist\MSVC\*\x64\*\vcruntime140.dll') .
           Copy-Item (vswhere -latest -find 'VC\Redist\MSVC\*\x64\*\vcruntime140_1.dll') .
-        # working-directory: ${{ matrix.build_path }}
+        working-directory: ${{ matrix.build_path }}
       - name: Compress build for Linux
         if: matrix.target == 'Linux'
         run: tar czf $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.tar.gz *
