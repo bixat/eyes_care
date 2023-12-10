@@ -69,10 +69,8 @@ jobs:
     needs: draft-release
     steps:
       # Set up Flutter.
-      - name: Clone Flutter repository with master channel
-        uses: subosito/flutter-action@cc97e1648fff6ca5cc647fa67f47e70f7895510b
-        with:
-          channel: master
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
 
       - name: Install Linux dependencies
         if: matrix.target == 'Linux'
@@ -100,15 +98,15 @@ jobs:
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for Linux
         if: matrix.target == 'Linux'
-        run: tar czf $GITHUB_WORKSPACE/eyes_care_${{ matrix.target }}.tar.gz *
+        run: tar czf $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.tar.gz *
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for macOS
         if: matrix.target == 'macOS'
-        run: ditto -c -k --sequesterRsrc --keepParent Flutter\ EyesCare.app $GITHUB_WORKSPACE/eyes_care_${{ matrix.target }}.zip
+        run: ditto -c -k --sequesterRsrc --keepParent EyesCare.app $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.zip
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for Windows
         if: matrix.target == 'Windows'
-        run: compress-archive -Path * -DestinationPath ${env:GITHUB_WORKSPACE}\eyes_care_${{ matrix.target }}.zip
+        run: compress-archive -Path * -DestinationPath ${env:GITHUB_WORKSPACE}\EyesCare${{ matrix.target }}.zip
         working-directory: ${{ matrix.build_path }}
 
       # Upload the build.
@@ -119,6 +117,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ needs.draft-release.outputs.upload_url }}
-          asset_path: ./eyes_care_${{ matrix.target }}${{ matrix.asset_extension }}
-          asset_name: eyes_care_${{ matrix.target }}${{ matrix.asset_extension }}
+          asset_path: ./EyesCare${{ matrix.target }}${{ matrix.asset_extension }}
+          asset_name: EyesCare${{ matrix.target }}${{ matrix.asset_extension }}
           asset_content_type: ${{ matrix.asset_content_type }}
