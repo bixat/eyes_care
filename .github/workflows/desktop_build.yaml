@@ -92,18 +92,13 @@ jobs:
       - run: flutter build -v ${{ matrix.build_target }} --release
 
       # Package the build.
-      - name: Copy DLLs
+      - name: Copy VC redistributables to release directory for Windows
+        if: matrix.target == 'Windows'
         run: |
-          $dlls = vswhere -latest -find 'VC\Redist\MSVC\*\x64\*\msvcp140.dll', 'VC\Redist\MSVC\*\x64\*\vcruntime140.dll', 'VC\Redist\MSVC\*\x64\*\vcruntime140_1.dll'
-          foreach ($dll in $dlls) {
-            if (Test-Path $dll) {
-              Copy-Item $dll -Destination .
-            } else {
-              Write-Error "File $dll does not exist"
-            }
-          }
-        shell: pwsh
-        working-directory: ${{ matrix.build_path }}
+          Copy-Item (vswhere -latest -find 'VC\Redist\MSVC\*\x64\*\msvcp140.dll') .
+          Copy-Item (vswhere -latest -find 'VC\Redist\MSVC\*\x64\*\vcruntime140.dll') .
+          Copy-Item (vswhere -latest -find 'VC\Redist\MSVC\*\x64\*\vcruntime140_1.dll') .
+        working-directory: ../${{ matrix.build_path }}
       - name: Compress build for Linux
         if: matrix.target == 'Linux'
         run: tar czf $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.tar.gz *
