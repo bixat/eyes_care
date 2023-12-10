@@ -38,7 +38,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        target: [macOS, Windows, Linux]
+        target: [macOS, Linux]
         include:
           - os: macos-latest
             target: macOS
@@ -46,12 +46,12 @@ jobs:
             build_path: build/macos/Build/Products/Release
             asset_extension: .zip
             asset_content_type: application/zip
-          - os: windows-latest
-            target: Windows
-            build_target: windows
-            build_path: build\windows\runner\Release
-            asset_extension: .zip
-            asset_content_type: application/zip
+          # - os: windows-latest
+          #   target: Windows
+          #   build_target: windows
+          #   build_path: build\windows\runner\Release
+          #   asset_extension: .zip
+          #   asset_content_type: application/zip
           - os: ubuntu-latest
             target: Linux
             build_target: linux
@@ -84,6 +84,9 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - run: flutter create .
       - run: flutter pub get
+      - name: install linux requirements for local_notifier package
+        if: matrix.target == 'Linux'
+        run: sudo apt-get install libnotify-dev
 
       # Build the application.
       - run: flutter build -v ${{ matrix.build_target }} --release
@@ -102,7 +105,7 @@ jobs:
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for macOS
         if: matrix.target == 'macOS'
-        run: ditto -c -k --sequesterRsrc --keepParent EyesCare.app $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.zip
+        run: ditto -c -k --sequesterRsrc --keepParent keep_your_eyes.app $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.zip
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for Windows
         if: matrix.target == 'Windows'
