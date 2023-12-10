@@ -9,16 +9,16 @@ void main() {
   DesktopWindow.setMinWindowSize(size);
   DesktopWindow.setWindowSize(size);
   DesktopWindow.setMaxWindowSize(size);
-  runApp(const KeepYourEyes());
+  runApp(const CareYourEyes());
 }
 
-class KeepYourEyes extends StatelessWidget {
-  const KeepYourEyes({super.key});
+class CareYourEyes extends StatelessWidget {
+  const CareYourEyes({super.key});
   // TODO : name from 20 min 20 sec 20 m
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'KeepYourEyes',
+      title: 'CareYourEyes',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -107,7 +107,7 @@ class CountdownScreenState extends State<CountdownScreen> {
     showNotification();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('KeepYourEyes'),
+        title: const Text('CareYourEyes'),
         leading: AnimatedBuilder(
             animation: _timer,
             builder: (context, _) {
