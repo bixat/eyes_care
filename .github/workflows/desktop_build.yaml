@@ -2,7 +2,7 @@ name: Draft Github Release
 on:
   push:
     branches:
-      - master
+      - fix-build-workflow-issue
   # Enable manual run
   # workflow_dispatch:
   #   inputs:
@@ -28,7 +28,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
-          tag_name: v0.0.1-beta
+          tag_name: v0.0.2-beta
           draft: true
           prerelease: false
           generate_release_notes: true
@@ -105,7 +105,7 @@ jobs:
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for macOS
         if: matrix.target == 'macOS'
-        run: ditto -c -k --sequesterRsrc --keepParent eyes_care.app $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.zip
+        run: ditto -c -k --sequesterRsrc --keepParent Eyes\ Care.app $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.zip
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for Windows
         if: matrix.target == 'Windows'
