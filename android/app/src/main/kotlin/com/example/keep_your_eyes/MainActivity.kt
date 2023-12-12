@@ -1,4 +1,4 @@
-package com.example.keep_your_eyes
+package com.example.eyes_care
 
 import io.flutter.embedding.android.FlutterActivity
 

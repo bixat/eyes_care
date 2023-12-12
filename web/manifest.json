@@ -1,6 +1,6 @@
 {
-    "name": "keep_your_eyes",
-    "short_name": "keep_your_eyes",
+    "name": "eyes_care",
+    "short_name": "eyes_care",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

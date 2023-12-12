@@ -105,7 +105,7 @@ jobs:
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for macOS
         if: matrix.target == 'macOS'
-        run: ditto -c -k --sequesterRsrc --keepParent keep_your_eyes.app $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.zip
+        run: ditto -c -k --sequesterRsrc --keepParent eyes_care.app $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.zip
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for Windows
         if: matrix.target == 'Windows'
