@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
 import 'package:local_notifier/local_notifier.dart';
@@ -5,7 +7,7 @@ import 'package:rocket_timer/rocket_timer.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  const Size size = Size(300, 300);
+  const Size size = Size(400, 400);
   DesktopWindow.setMinWindowSize(size);
   DesktopWindow.setWindowSize(size);
   DesktopWindow.setMaxWindowSize(size);
@@ -81,7 +83,7 @@ class CountdownScreenState extends State<CountdownScreen> {
       body: "rules 20 for care your eyes",
     );
     notification.onShow = () {
-      print('onShow ${notification.identifier}');
+      log('onShow ${notification.identifier}');
     };
     notification.onClose = (closeReason) {
       switch (closeReason) {
@@ -91,13 +93,13 @@ class CountdownScreenState extends State<CountdownScreen> {
           break;
         default:
       }
-      print('onClose ${notification.identifier} - $closeReason');
+      log('onClose ${notification.identifier} - $closeReason');
     };
     notification.onClick = () {
-      print('onClick ${notification.identifier}');
+      log('onClick ${notification.identifier}');
     };
     notification.onClickAction = (actionIndex) {
-      print('onClickAction ${notification.identifier} - $actionIndex');
+      log('onClickAction ${notification.identifier} - $actionIndex');
     };
 
     notification.show();
@@ -107,9 +109,29 @@ class CountdownScreenState extends State<CountdownScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Eyes Care'),
-        actions: [
-          ValueListenableBuilder(
+          title: const Text('Eyes Care'),
+          centerTitle: true,
+          actions: [
+            AnimatedBuilder(
+                animation: _timer,
+                builder: (context, _) {
+                  return IconButton(
+                    icon: Icon(_timer.status == TimerStatus.pause
+                        ? Icons.play_arrow
+                        : Icons.pause),
+                    onPressed: () {
+                      if (_timer.status == TimerStatus.pause) {
+                        _timer.start();
+                      } else {
+                        _timer.pause();
+                      }
+                    },
+                  );
+                }),
+            IconButton(
+                onPressed: _timer.restart, icon: const Icon(Icons.restart_alt)),
+          ],
+          leading: ValueListenableBuilder(
               valueListenable: themeNotifier,
               builder: (context, _, __) {
                 final isLight = themeNotifier.value.index == 1;
@@ -119,55 +141,57 @@ class CountdownScreenState extends State<CountdownScreen> {
                           isLight ? ThemeMode.dark : ThemeMode.light;
                     },
                     icon: Icon(isLight ? Icons.dark_mode : Icons.light_mode));
-              })
-        ],
-        leading: AnimatedBuilder(
-            animation: _timer,
-            builder: (context, _) {
-              return IconButton(
-                icon: Icon(_timer.status == TimerStatus.pause
-                    ? Icons.play_arrow
-                    : Icons.pause),
-                onPressed: () {
-                  if (_timer.status == TimerStatus.pause) {
-                    _timer.start();
-                  } else {
-                    _timer.pause();
-                  }
-                },
-              );
-            }),
-      ),
-      body: Center(
-          child: RocketTimerBuilder(
-        timer: _timer,
-        builder: (BuildContext context) {
-          List splited = _timer.formattedDuration.split(":");
-          splited.removeAt(0);
-          return Stack(
+              })),
+      body: Container(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Center(
-                child: Text(
-                  splited.join(':'),
-                  style: Theme.of(context).textTheme.titleLarge,
+              Expanded(
+                child: RocketTimerBuilder(
+                  timer: _timer,
+                  builder: (BuildContext context) {
+                    List splited = _timer.formattedDuration.split(":");
+                    splited.removeAt(0);
+                    return Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Center(
+                          child: Text(
+                            splited.join(':'),
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                        ),
+                        Center(
+                          child: SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: CircularProgressIndicator(
+                              color: inProgress ? Colors.orange : Colors.blue,
+                              backgroundColor: Colors.grey[300],
+                              strokeWidth: 10,
+                              value:
+                                  _timer.kDuration / _timer.duration.inSeconds,
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+                  },
                 ),
               ),
-              Center(
-                child: SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: CircularProgressIndicator(
-                    color: inProgress ? Colors.orange : Colors.blue,
-                    backgroundColor: Colors.grey[300],
-                    strokeWidth: 10,
-                    value: _timer.kDuration / _timer.duration.inSeconds,
-                  ),
+              Expanded(
+                child: Text(
+                  "Give your eyes a rest by following the 20-20-20 rule. Every 20 minutes, look away from your screen and focus on something 20 feet away for 20 seconds. This helps reduce eye strain caused by prolonged screen use.",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
               )
             ],
-          );
-        },
-      )),
+          )),
     );
   }
 }

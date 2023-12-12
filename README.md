@@ -1,4 +1,4 @@
-# keep_your_eyes
+# eyes_care
 
 A new Flutter project.
 
