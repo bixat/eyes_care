@@ -2,7 +2,7 @@ name: Draft Github Release
 on:
   push:
     branches:
-      - fix-build-workflow-issue
+      - master
 
   # Enable manual run
   # workflow_dispatch:
