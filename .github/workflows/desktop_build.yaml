@@ -125,7 +125,6 @@ jobs:
         run: |
           pwd
           appdmg installer/dmg_creator/config.json $GITHUB_WORKSPACE/CareYourEyes${{ matrix.target }}.dmg
-        working-directory: ${{ matrix.build_path }}
       - name: Compress build for Windows
         if: matrix.target == 'Windows'
         run: compress-archive -Path * -DestinationPath ${env:GITHUB_WORKSPACE}\EyesCare${{ matrix.target }}.zip
