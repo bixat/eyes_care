@@ -15,9 +15,5 @@ jobs:
               with:
                 node-version: '14'
             - name: Uninstall appdmg
-              run: npm uninstall -g appdmg
-               
-            - name: Install appdmg
-              run: npm install -g appdmg
-    
+              run: python --version
 
