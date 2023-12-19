@@ -2,7 +2,7 @@ name: Draft Github Release
 on:
   push:
     branches:
-      - master
+      - use-dmg-for-macos-build
 
   # Enable manual run
   # workflow_dispatch:
@@ -45,7 +45,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        target: [macOS, Windows, Linux]
+        target: [macOS]
         include:
           - os: macos-latest
             target: macOS
@@ -53,18 +53,18 @@ jobs:
             build_path: build/macos/Build/Products/Release
             asset_extension: .zip
             asset_content_type: application/zip
-          - os: windows-latest
-            target: Windows
-            build_target: windows
-            build_path: build/windows/x64/runner/Release
-            asset_extension: .zip
-            asset_content_type: application/zip
-          - os: ubuntu-latest
-            target: Linux
-            build_target: linux
-            build_path: build/linux/x64/release/bundle
-            asset_extension: .tar.gz
-            asset_content_type: application/gzip
+          # - os: windows-latest
+          #   target: Windows
+          #   build_target: windows
+          #   build_path: build/windows/x64/runner/Release
+          #   asset_extension: .zip
+          #   asset_content_type: application/zip
+          # - os: ubuntu-latest
+          #   target: Linux
+          #   build_target: linux
+          #   build_path: build/linux/x64/release/bundle
+          #   asset_extension: .tar.gz
+          #   asset_content_type: application/gzip
           # - os: ubuntu-latest
           #   target: Android
           #   build_target: apk
@@ -110,9 +110,11 @@ jobs:
         if: matrix.target == 'Linux'
         run: tar czf $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.tar.gz *
         working-directory: ${{ matrix.build_path }}
-      - name: Compress build for macOS
+      - uses: actions/setup-node@v4
         if: matrix.target == 'macOS'
-        run: ditto -c -k --sequesterRsrc --keepParent Eyes\ Care.app $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.zip
+      - name: Convert build to dmg for macOS
+        if: matrix.target == 'macOS'
+        run: npm install -g appdmg ; appdmg ./installer/dmg_creator/config.json $GITHUB_WORKSPACE/CareYourEyes${{ matrix.target }}.dmg
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for Windows
         if: matrix.target == 'Windows'
