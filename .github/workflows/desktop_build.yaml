@@ -76,8 +76,8 @@ jobs:
     needs: draft-release
     steps:
       # Set up Flutter.
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+      # - name: Setup Flutter
+      #   uses: subosito/flutter-action@v2
 
       - name: Install Linux dependencies
         if: matrix.target == 'Linux'
@@ -85,18 +85,18 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev
 
-      - run: flutter doctor -v
+      # - run: flutter doctor -v
       # Checkout EyesCare code, recreate missing files, and get packages.
       - name: Checkout EyesCare code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - run: flutter create .
-      - run: flutter pub get
-      - name: install linux requirements for local_notifier package
-        if: matrix.target == 'Linux'
-        run: sudo apt-get install libnotify-dev
+      # - run: flutter create .
+      # - run: flutter pub get
+      # - name: install linux requirements for local_notifier package
+      #   if: matrix.target == 'Linux'
+      #   run: sudo apt-get install libnotify-dev
 
       # Build the application.
-      - run: flutter build -v ${{ matrix.build_target }} --release
+      # - run: flutter build -v ${{ matrix.build_target }} --release
 
       # Package the build.
       - name: Copy VC redistributables to release directory for Windows
@@ -110,11 +110,13 @@ jobs:
         if: matrix.target == 'Linux'
         run: tar czf $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.tar.gz *
         working-directory: ${{ matrix.build_path }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         if: matrix.target == 'macOS'
       - name: Convert build to dmg for macOS
         if: matrix.target == 'macOS'
-        run: npm install -g appdmg ; appdmg ./installer/dmg_creator/config.json $GITHUB_WORKSPACE/CareYourEyes${{ matrix.target }}.dmg
+        run: |
+          npm install -g appdmg
+          appdmg ./installer/dmg_creator/config.json $GITHUB_WORKSPACE/CareYourEyes${{ matrix.target }}.dmg
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for Windows
         if: matrix.target == 'Windows'
