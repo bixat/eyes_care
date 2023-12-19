@@ -15,6 +15,9 @@ jobs:
               with:
                 node-version: '14'
             - name: Install appdmg
-              run: npm install -g appdmg
+              run: |
+                npx node-gyp install
+                npm install -g appdmg
+
     
 
