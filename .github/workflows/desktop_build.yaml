@@ -51,8 +51,8 @@ jobs:
             target: macOS
             build_target: macos
             build_path: build/macos/Build/Products/Release
-            asset_extension: .zip
-            asset_content_type: application/zip
+            asset_extension: .dmg
+            asset_content_type: application/vnd.appimage
           # - os: windows-latest
           #   target: Windows
           #   build_target: windows
@@ -120,7 +120,7 @@ jobs:
           brew install python@3.9
           npm config set python /usr/local/bin/python3.9
           npm install -g appdmg
-          appdmg ./installer/dmg_creator/config.json $GITHUB_WORKSPACE/CareYourEyes${{ matrix.target }}.dmg
+          appdmg installer/dmg_creator/config.json $GITHUB_WORKSPACE/CareYourEyes${{ matrix.target }}.dmg
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for Windows
         if: matrix.target == 'Windows'
