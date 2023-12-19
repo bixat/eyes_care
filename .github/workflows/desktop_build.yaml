@@ -2,7 +2,7 @@ name: Draft Github Release
 on:
   push:
     branches:
-      - 5-use-dmg-for-macos-build
+      - master
 
   # Enable manual run
   # workflow_dispatch:
