@@ -15,5 +15,7 @@ jobs:
               with:
                 node-version: '14'
             - name: Uninstall appdmg
-              run: python --version
+              run: |
+                brew install python@3.9
+                which python3.10
 
