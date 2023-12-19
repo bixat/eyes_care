@@ -17,5 +17,6 @@ jobs:
             - name: Uninstall appdmg
               run: |
                 brew install python@3.9
-                which python3.10
+                npm config set python /usr/local/bin/python3.9
+                npm uninstall -g appdmg
 
