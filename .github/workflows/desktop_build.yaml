@@ -110,12 +110,12 @@ jobs:
         if: matrix.target == 'Linux'
         run: tar czf $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.tar.gz *
         working-directory: ${{ matrix.build_path }}
-      - uses: actions/setup-node@v3
-        if: matrix.target == 'macOS'
       - name: Convert build to dmg for macOS
         if: matrix.target == 'macOS'
         run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
           npm install -g appdmg
+          appdmg --version
           appdmg ./installer/dmg_creator/config.json $GITHUB_WORKSPACE/CareYourEyes${{ matrix.target }}.dmg
         working-directory: ${{ matrix.build_path }}
       - name: Compress build for Windows
