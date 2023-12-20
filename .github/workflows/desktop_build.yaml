@@ -2,7 +2,7 @@ name: Draft Github Release
 on:
   push:
     branches:
-      - 5-use-dmg-for-macos-build
+      - master
 
   # Enable manual run
   # workflow_dispatch:
@@ -45,7 +45,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        target: [macOS]
+        target: [macOS, Windows, Linux]
         include:
           - os: macos-latest
             target: macOS
@@ -53,19 +53,19 @@ jobs:
             build_path: build/macos/Build/Products/Release
             asset_extension: .dmg
             asset_content_type: application/vnd.appimage
-          # - os: windows-latest
-          #   target: Windows
-          #   build_target: windows
-          #   build_path: build/windows/x64/runner/Release
-          #   asset_extension: .zip
-          #   asset_content_type: application/zip
-          # - os: ubuntu-latest
-          #   target: Linux
-          #   build_target: linux
-          #   build_path: build/linux/x64/release/bundle
-          #   asset_extension: .tar.gz
-          #   asset_content_type: application/gzip
-          # - os: ubuntu-latest
+          - os: windows-latest
+            target: Windows
+            build_target: windows
+            build_path: build/windows/x64/runner/Release
+            asset_extension: .zip
+            asset_content_type: application/zip
+          - os: ubuntu-latest
+            target: Linux
+            build_target: linux
+            build_path: build/linux/x64/release/bundle
+            asset_extension: .tar.gz
+            asset_content_type: application/gzip
+          - os: ubuntu-latest
           #   target: Android
           #   build_target: apk
           #   build_path: build/app/outputs/flutter-apk
