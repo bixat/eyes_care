@@ -51,8 +51,8 @@ jobs:
             target: macOS
             build_target: macos
             build_path: build/macos/Build/Products/Release
-            asset_extension: .zip
-            asset_content_type: application/zip
+            asset_extension: .dmg
+            asset_content_type: application/vnd.appimage
           - os: windows-latest
             target: Windows
             build_target: windows
@@ -65,7 +65,7 @@ jobs:
             build_path: build/linux/x64/release/bundle
             asset_extension: .tar.gz
             asset_content_type: application/gzip
-          # - os: ubuntu-latest
+          - os: ubuntu-latest
           #   target: Android
           #   build_target: apk
           #   build_path: build/app/outputs/flutter-apk
@@ -110,10 +110,19 @@ jobs:
         if: matrix.target == 'Linux'
         run: tar czf $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.tar.gz *
         working-directory: ${{ matrix.build_path }}
-      - name: Compress build for macOS
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Convert build to dmg for macOS
         if: matrix.target == 'macOS'
-        run: ditto -c -k --sequesterRsrc --keepParent Eyes\ Care.app $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.zip
-        working-directory: ${{ matrix.build_path }}
+        run: |
+          brew install python@3.9
+          npm config set python /usr/local/bin/python3.9
+          npm install -g appdmg
+      - name: run appdmg
+        if: matrix.target == 'macOS'
+        run: appdmg installer/dmg_creator/config.json $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.dmg
       - name: Compress build for Windows
         if: matrix.target == 'Windows'
         run: compress-archive -Path * -DestinationPath ${env:GITHUB_WORKSPACE}\EyesCare${{ matrix.target }}.zip
