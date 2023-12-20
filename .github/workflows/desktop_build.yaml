@@ -122,9 +122,7 @@ jobs:
           npm install -g appdmg
       - name: run appdmg
         if: matrix.target == 'macOS'
-        run: |
-          pwd
-          appdmg installer/dmg_creator/config.json $GITHUB_WORKSPACE/CareYourEyes${{ matrix.target }}.dmg
+        run: appdmg installer/dmg_creator/config.json $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.dmg
       - name: Compress build for Windows
         if: matrix.target == 'Windows'
         run: compress-archive -Path * -DestinationPath ${env:GITHUB_WORKSPACE}\EyesCare${{ matrix.target }}.zip
