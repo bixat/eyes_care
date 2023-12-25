@@ -7,7 +7,7 @@ permissions: read-all
 
 jobs:
   draft-release:
-    name: Draft Github release
+    name: Create Github release
     runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
@@ -25,7 +25,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           tag_name: ${{ env.version_name }}
-          draft: true
           prerelease: false
           generate_release_notes: true
 
