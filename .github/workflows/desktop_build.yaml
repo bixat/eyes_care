@@ -1,17 +1,6 @@
-name: Draft Github Release
+name: Create Github Release
 on:
-  push:
-    branches:
-      - master
-
-  # Enable manual run
-  # workflow_dispatch:
-  #   inputs:
-  #     version:
-  #       description: "Tag to create (e.g. v2.10.0). Must include 'v' and must match pubspec"
-  #       required: true
-  #       default: "v2.10.0"
-  #       type: string
+  workflow_dispatch:
 
 # Declare default permissions as read only.
 permissions: read-all
@@ -36,7 +25,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           tag_name: ${{ env.version_name }}
-          draft: true
           prerelease: false
           generate_release_notes: true
 
