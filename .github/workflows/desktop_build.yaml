@@ -1,6 +1,8 @@
 name: Create Github Release
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - 10-fix-create-release-workflow-issue
 
 # Declare default permissions as read only.
 permissions: read-all
