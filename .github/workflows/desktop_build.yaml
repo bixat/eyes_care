@@ -27,6 +27,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           tag_name: ${{ env.version_name }}
+          draft: true
           prerelease: false
           generate_release_notes: true
 
@@ -68,10 +69,6 @@ jobs:
       # Set up Flutter.
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.16.3'
-          channel: 'stable'
-        
 
       - name: Install Linux dependencies
         if: matrix.target == 'Linux'
