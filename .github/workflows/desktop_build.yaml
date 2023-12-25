@@ -85,7 +85,8 @@ jobs:
       - name: install linux requirements for local_notifier package
         if: matrix.target == 'Linux'
         run: sudo apt-get install libnotify-dev
-
+      - name: flutter doctor
+        run: flutter doctor
       # Build the application.
       - run: flutter build -v ${{ matrix.build_target }} --release
 
