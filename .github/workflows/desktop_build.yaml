@@ -56,7 +56,7 @@ jobs:
             build_path: build/linux/x64/release/bundle
             asset_extension: .tar.gz
             asset_content_type: application/gzip
-          - os: ubuntu-latest
+          # - os: ubuntu-latest
           #   target: Android
           #   build_target: apk
           #   build_path: build/app/outputs/flutter-apk
