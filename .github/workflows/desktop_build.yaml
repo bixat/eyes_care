@@ -86,7 +86,7 @@ jobs:
         run: sudo apt-get install libnotify-dev
 
       # Build the application.
-      - run: flutter build -v ${{ matrix.build_target }} --release
+      - run: flutter build -v ${{ matrix.build_target }}
 
       # Package the build.
       - name: Copy VC redistributables to release directory for Windows
