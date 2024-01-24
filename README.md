@@ -25,8 +25,8 @@ Eyes Care is a desktop application built with Flutter, designed to help users ma
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/yourusername/eyes-care-desktop-app.git`
-2. Navigate to the project directory: `cd eyes-care-desktop-app`
+1. Clone the repository: `git clone https://github.com/bixat/eyes_care.git`
+2. Navigate to the project directory: `cd eyes_care`
 3. Install the dependencies: `flutter pub get`
 4. Run the app: `flutter run`
 
