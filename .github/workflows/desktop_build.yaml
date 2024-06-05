@@ -94,8 +94,6 @@ jobs:
         working-directory: ${{ matrix.build_path }}
       - name: Setup Node.js environment
         uses: actions/setup-node@v2
-        with:
-          node-version: '14'
       - name: Convert build to dmg for macOS
         if: matrix.target == 'macOS'
         run: |
