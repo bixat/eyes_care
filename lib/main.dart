@@ -1,5 +1,6 @@
 import 'package:eyes_care/shared_pref.dart';
 import 'package:eyes_care/widgets/force_mode_check_box.dart';
+import 'package:eyes_care/widgets/rule_text.dart';
 import 'package:eyes_care/widgets/rule_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:local_notifier/local_notifier.dart';
@@ -127,11 +128,10 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
 
   _onShowNotification() async {
     if (forceModeEnabled.value) {
-      if(inProgress){
-
-      await windowManager.show();
-      await windowManager.focus();
-      }else{
+      if (inProgress) {
+        await windowManager.show();
+        await windowManager.focus();
+      } else {
         windowManager.minimize();
       }
     }
@@ -183,21 +183,15 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              RuleTimer(timer: _timer, inProgress: inProgress),
               Expanded(
                 child: Column(
                   children: [
-                    Text(
-                      "Give your eyes a rest by following the 20-20-20 rule. Every 20 minutes, look away from your screen and focus on something 20 feet away for 20 seconds. This helps reduce eye strain caused by prolonged screen use.",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
+                    const RuleText(),
                     ForceModeCheckBox(forceModeEnabled: forceModeEnabled)
                   ],
                 ),
-              )
+              ),
+              RuleTimer(timer: _timer, inProgress: inProgress),
             ],
           )),
     );

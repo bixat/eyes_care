@@ -14,15 +14,27 @@ class ForceModeCheckBox extends StatelessWidget {
     return ValueListenableBuilder(
         valueListenable: forceModeEnabled,
         builder: (context, _, __) {
-          return CheckboxListTile(
-            title: const Text("Force Mode"),
-            value: forceModeEnabled.value,
-            onChanged: (value) {
-              PreferenceService.setBool(
-                  PreferenceService.forceModeKey, value!);
-              forceModeEnabled.value = value;
+          return ListTile(
+            onTap: () {
+              onChanged(!forceModeEnabled.value);
             },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14.0)),
+            title: Row(
+              children: [
+                Checkbox(
+                  value: forceModeEnabled.value,
+                  onChanged: onChanged,
+                ),
+                const Text("Force Mode"),
+              ],
+            ),
           );
         });
+  }
+
+  void onChanged(value) {
+    PreferenceService.setBool(PreferenceService.forceModeKey, value!);
+    forceModeEnabled.value = value;
   }
 }
