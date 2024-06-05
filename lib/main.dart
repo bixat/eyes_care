@@ -1,16 +1,14 @@
-import 'dart:developer';
-
-import 'package:desktop_window/desktop_window.dart';
+import 'package:eyes_care/shared_pref.dart';
+import 'package:eyes_care/widgets/force_mode_check_box.dart';
+import 'package:eyes_care/widgets/rule_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:local_notifier/local_notifier.dart';
 import 'package:rocket_timer/rocket_timer.dart';
+import 'package:window_manager/window_manager.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  const Size size = Size(400, 400);
-  DesktopWindow.setMinWindowSize(size);
-  DesktopWindow.setWindowSize(size);
-  DesktopWindow.setMaxWindowSize(size);
+  await windowManager.ensureInitialized();
   runApp(const CareYourEyes());
 }
 
@@ -35,8 +33,9 @@ class CareYourEyes extends StatelessWidget {
   }
 }
 
-const int rule = 20;
+const int rule = 1;
 const duration = Duration(minutes: rule);
+const size = Size(400, 400);
 
 class CountdownScreen extends StatefulWidget {
   const CountdownScreen({super.key});
@@ -45,11 +44,34 @@ class CountdownScreen extends StatefulWidget {
   CountdownScreenState createState() => CountdownScreenState();
 }
 
-class CountdownScreenState extends State<CountdownScreen> {
+class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   late RocketTimer _timer;
   bool inProgress = false;
+  late ValueNotifier<bool> forceModeEnabled = ValueNotifier(false);
+  int followed = 0;
+  WindowOptions windowOptions = const WindowOptions(
+    windowButtonVisibility: false,
+    size: size,
+    minimumSize: size,
+    maximumSize: size,
+    center: true,
+    backgroundColor: Colors.transparent,
+    skipTaskbar: false,
+    titleBarStyle: TitleBarStyle.hidden,
+  );
+
   @override
   void initState() {
+    setUpForceMode();
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
+      await windowManager.focus();
+    });
+    windowManager.addListener(this);
+    localNotifier.setup(
+      appName: 'CareYourEyes',
+      shortcutPolicy: ShortcutPolicy.requireCreate,
+    );
     super.initState();
     initTimer();
   }
@@ -66,43 +88,53 @@ class CountdownScreenState extends State<CountdownScreen> {
     _timer.start();
   }
 
+  setUpForceMode() {
+    PreferenceService.getBool(PreferenceService.forceModeKey).then((value) {
+      forceModeEnabled.value = value ?? false;
+    });
+  }
+
+  @override
+  void onWindowMinimize() {
+    if (inProgress && forceModeEnabled.value) windowManager.focus();
+    super.onWindowMinimize();
+  }
+
+  @override
+  void onWindowBlur() {
+    if (inProgress && forceModeEnabled.value) {
+      windowManager.focus();
+      windowManager.show();
+    }
+    super.onWindowBlur();
+  }
+
   @override
   void dispose() {
     _timer.dispose();
+    windowManager.removeListener(this);
     super.dispose();
   }
 
   Future<void> showNotification() async {
-    await localNotifier.setup(
-      appName: 'CareYourEyes',
-      shortcutPolicy: ShortcutPolicy.requireCreate,
-    );
-
     LocalNotification notification = LocalNotification(
       title: "Care your eyes",
       body: "rules 20 for care your eyes",
     );
-    notification.onShow = () {
-      log('onShow ${notification.identifier}');
-    };
-    notification.onClose = (closeReason) {
-      switch (closeReason) {
-        case LocalNotificationCloseReason.userCanceled:
-          break;
-        case LocalNotificationCloseReason.timedOut:
-          break;
-        default:
-      }
-      log('onClose ${notification.identifier} - $closeReason');
-    };
-    notification.onClick = () {
-      log('onClick ${notification.identifier}');
-    };
-    notification.onClickAction = (actionIndex) {
-      log('onClickAction ${notification.identifier} - $actionIndex');
-    };
-
+    notification.onShow = _onShowNotification;
     notification.show();
+  }
+
+  _onShowNotification() async {
+    if (forceModeEnabled.value) {
+      if(inProgress){
+
+      await windowManager.show();
+      await windowManager.focus();
+      }else{
+        windowManager.hide();
+      }
+    }
   }
 
   @override
@@ -130,6 +162,9 @@ class CountdownScreenState extends State<CountdownScreen> {
                 }),
             IconButton(
                 onPressed: _timer.restart, icon: const Icon(Icons.restart_alt)),
+            IconButton(
+                onPressed: windowManager.minimize,
+                icon: const Icon(Icons.minimize_rounded)),
           ],
           leading: ValueListenableBuilder(
               valueListenable: themeNotifier,
@@ -148,46 +183,19 @@ class CountdownScreenState extends State<CountdownScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              RuleTimer(timer: _timer, inProgress: inProgress),
               Expanded(
-                child: RocketTimerBuilder(
-                  timer: _timer,
-                  builder: (BuildContext context) {
-                    List splited = _timer.formattedDuration.split(":");
-                    splited.removeAt(0);
-                    return Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Center(
-                          child: Text(
-                            splited.join(':'),
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                        ),
-                        Center(
-                          child: SizedBox(
-                            height: 100,
-                            width: 100,
-                            child: CircularProgressIndicator(
-                              color: inProgress ? Colors.orange : Colors.blue,
-                              backgroundColor: Colors.grey[300],
-                              strokeWidth: 10,
-                              value:
-                                  _timer.kDuration / _timer.duration.inSeconds,
-                            ),
-                          ),
-                        )
-                      ],
-                    );
-                  },
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  "Give your eyes a rest by following the 20-20-20 rule. Every 20 minutes, look away from your screen and focus on something 20 feet away for 20 seconds. This helps reduce eye strain caused by prolonged screen use.",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(fontWeight: FontWeight.bold),
+                child: Column(
+                  children: [
+                    Text(
+                      "Give your eyes a rest by following the 20-20-20 rule. Every 20 minutes, look away from your screen and focus on something 20 feet away for 20 seconds. This helps reduce eye strain caused by prolonged screen use.",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    ForceModeCheckBox(forceModeEnabled: forceModeEnabled)
+                  ],
                 ),
               )
             ],
