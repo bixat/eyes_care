@@ -132,7 +132,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
       await windowManager.show();
       await windowManager.focus();
       }else{
-        windowManager.hide();
+        windowManager.minimize();
       }
     }
   }
