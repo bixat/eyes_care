@@ -33,7 +33,7 @@ class CareYourEyes extends StatelessWidget {
   }
 }
 
-const int rule = 1;
+const int rule = 20;
 const duration = Duration(minutes: rule);
 const size = Size(400, 400);
 
