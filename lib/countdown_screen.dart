@@ -58,6 +58,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
         showNotification();
         _timer.kDuration = inProgress ? duration.inSeconds : rule;
         inProgress = !inProgress;
+        setState(() {});
       }
     });
     _timer.start();
