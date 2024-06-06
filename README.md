@@ -50,6 +50,15 @@ We welcome contributions from the community to enhance the Eyes Care app. To con
 
 [MIT License](https://opensource.org/licenses/MIT)
 
+## Tools / Acknowledgements
+
+- [rocket_timer](https://pub.dev/packages/rocket_timer)
+
+Special thanks to these amazing projects from [LeanFlutter](https://github.com/leanflutter) which help power CareEyes:
+
+- [local_notifier](https://pub.dev/packages/local_notifier)
+- [window_manager](https://pub.dev/packages/window_manager)
+
 ## Support
 
 If you encounter any issues or have any questions or suggestions, please [open an issue](https://github.com/bixat/eyes_care/issues) on the GitHub repository.
