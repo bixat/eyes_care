@@ -72,7 +72,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   @override
   Future<void> onWindowMinimize() async {
     if (forceModeEnabled.value) {
-      await showWindow();
+      await handleWindowState();
     }
     super.onWindowMinimize();
   }
@@ -80,12 +80,12 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   @override
   Future<void> onWindowBlur() async {
     if (forceModeEnabled.value) {
-      await showWindow();
+      await handleWindowState();
     }
     super.onWindowBlur();
   }
 
-  Future<void> showWindow() async {
+  Future<void> handleWindowState() async {
     if (inProgress) {
       await windowManager.show();
       await windowManager.focus();
@@ -114,7 +114,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
 
   _onShowNotification() async {
     if (forceModeEnabled.value) {
-      await showWindow();
+      await handleWindowState();
     }
   }
 
