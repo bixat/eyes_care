@@ -11,8 +11,10 @@ class RuleTimer extends StatelessWidget {
   final RocketTimer _timer;
   final bool inProgress;
 
+  final circleSize = 100.0;
   @override
   Widget build(BuildContext context) {
+    final stroke = inProgress ? 20.0 : 10.0;
     return Expanded(
       child: RocketTimerBuilder(
         timer: _timer,
@@ -30,12 +32,12 @@ class RuleTimer extends StatelessWidget {
               ),
               Center(
                 child: SizedBox(
-                  height: 100,
-                  width: 100,
+                  height: circleSize,
+                  width: circleSize,
                   child: CircularProgressIndicator(
                     color: inProgress ? Colors.orange : Colors.blue,
                     backgroundColor: Colors.grey[300],
-                    strokeWidth: 10,
+                    strokeWidth: stroke,
                     value: _timer.kDuration / _timer.duration.inSeconds,
                   ),
                 ),

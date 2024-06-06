@@ -106,7 +106,9 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   Future<void> showNotification() async {
     LocalNotification notification = LocalNotification(
       title: inProgress ? "Stay Focused 💪" : "Take a Moment 🌟",
-      body: inProgress ? "Keep your gaze on the screen. Remember, every 20 minutes, take a 20-second break looking at something 20 feet away." : "Step back from the screen and focus on something 20 feet away for 20 seconds. Your eyes will thank you!",
+      body: inProgress
+          ? "Keep your gaze on the screen. Remember, every 20 minutes, take a 20-second break looking at something 20 feet away."
+          : "Step back from the screen and focus on something 20 feet away for 20 seconds. Your eyes will thank you!",
     );
     notification.onShow = _onShowNotification;
     notification.show();
@@ -160,14 +162,21 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
               })),
       body: Container(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
+          child: Flex(
+            direction: inProgress ? Axis.vertical : Axis.horizontal,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const RuleText(),
+                    if (inProgress)
+                      Text(
+                          "look away from your screen and focus on something 20 feet away for 20 seconds.",
+                          style: Theme.of(context).textTheme.headlineMedium)
+                    else
+                      const RuleText(),
                     ForceModeCheckBox(forceModeEnabled: forceModeEnabled)
                   ],
                 ),
