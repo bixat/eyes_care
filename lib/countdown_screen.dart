@@ -70,18 +70,30 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   }
 
   @override
-  void onWindowMinimize() {
-    if (inProgress && forceModeEnabled.value) windowManager.focus();
+  Future<void> onWindowMinimize() async {
+    if (forceModeEnabled.value) {
+      await showWindow();
+    }
     super.onWindowMinimize();
   }
 
   @override
-  void onWindowBlur() {
-    if (inProgress && forceModeEnabled.value) {
-      windowManager.focus();
-      windowManager.show();
+  Future<void> onWindowBlur() async {
+    if (forceModeEnabled.value) {
+      await showWindow();
     }
     super.onWindowBlur();
+  }
+
+  Future<void> showWindow() async {
+    if (inProgress) {
+      await windowManager.show();
+      await windowManager.focus();
+      await windowManager.setFullScreen(true);
+    } else {
+      windowManager.minimize();
+      await windowManager.setFullScreen(false);
+    }
   }
 
   @override
@@ -93,8 +105,8 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
 
   Future<void> showNotification() async {
     LocalNotification notification = LocalNotification(
-      title: "Care your eyes",
-      body: "rules 20 for care your eyes",
+      title: inProgress ? "Stay Focused 💪" : "Take a Moment 🌟",
+      body: inProgress ? "Keep your gaze on the screen. Remember, every 20 minutes, take a 20-second break looking at something 20 feet away." : "Step back from the screen and focus on something 20 feet away for 20 seconds. Your eyes will thank you!",
     );
     notification.onShow = _onShowNotification;
     notification.show();
@@ -102,12 +114,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
 
   _onShowNotification() async {
     if (forceModeEnabled.value) {
-      if (inProgress) {
-        await windowManager.show();
-        await windowManager.focus();
-      } else {
-        windowManager.minimize();
-      }
+      await showWindow();
     }
   }
 
