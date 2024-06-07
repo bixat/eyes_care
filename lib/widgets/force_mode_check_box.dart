@@ -25,6 +25,7 @@ class ForceModeCheckBox extends StatelessWidget {
                 Checkbox(
                   value: forceModeEnabled.value,
                   onChanged: onChanged,
+                  fillColor: const MaterialStatePropertyAll(Colors.blue),
                 ),
                 const Text("Force Mode"),
               ],
