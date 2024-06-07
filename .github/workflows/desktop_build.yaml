@@ -94,14 +94,9 @@ jobs:
         working-directory: ${{ matrix.build_path }}
       - name: Setup Node.js environment
         uses: actions/setup-node@v2
-        with:
-          node-version: '14'
       - name: Convert build to dmg for macOS
         if: matrix.target == 'macOS'
-        run: |
-          brew install python@3.9
-          npm config set python /usr/local/bin/python3.9
-          npm install -g appdmg
+        run: npm install -g appdmg
       - name: run appdmg
         if: matrix.target == 'macOS'
         run: appdmg installer/dmg_creator/config.json $GITHUB_WORKSPACE/EyesCare${{ matrix.target }}.dmg
