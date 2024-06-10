@@ -1,4 +1,5 @@
 import 'package:eyes_care/main.dart';
+import 'package:eyes_care/widgets/edit_rule_button.dart';
 import 'package:flutter/material.dart';
 import 'package:rocket_timer/rocket_timer.dart';
 import 'package:window_manager/window_manager.dart';
@@ -182,7 +183,13 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
                   ],
                 ),
               ),
-              RuleTimer(timer: _timer, inProgress: inProgress),
+              Expanded(
+                  child: Column(
+                children: [
+                  RuleTimer(timer: _timer, inProgress: inProgress),
+                  const EditRuleButton(),
+                ],
+              )),
             ],
           )),
     );
