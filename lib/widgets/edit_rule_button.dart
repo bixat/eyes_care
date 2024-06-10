@@ -15,24 +15,32 @@ class _EditRuleButtonState extends State<EditRuleButton> {
   int seconds = 20;
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () async {
-        await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return DurationPickerDialog(
-              onConfirm: (int min, int sec) {
-                minutes = min;
-                seconds = sec;
-                setState(() {});
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        TextButton(
+          style: ButtonStyle(
+            backgroundColor:
+                MaterialStatePropertyAll(Colors.blue.withOpacity(0.2)),
+          ),
+          onPressed: () async {
+            await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return DurationPickerDialog(
+                  onConfirm: (int min, int sec) {
+                    minutes = min;
+                    seconds = sec;
+                    setState(() {});
+                  },
+                );
               },
             );
           },
-        );
-      },
-      child: Column(
-        children: [const Text("Edit Rule"), Text("${minutes}m - ${seconds}s")],
-      ),
+          child: const Text("Edit Rule"),
+        ),
+        Text("${minutes}m - ${seconds}s")
+      ],
     );
   }
 }
