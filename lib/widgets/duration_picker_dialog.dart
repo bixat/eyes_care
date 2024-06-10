@@ -1,4 +1,4 @@
-import 'package:eyes_care/widgets/custom_minutes_slider.dart';
+import 'package:eyes_care/widgets/custom_slider.dart';
 import 'package:flutter/material.dart';
 
 class DurationPickerDialog extends StatefulWidget {
