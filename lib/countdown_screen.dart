@@ -16,12 +16,10 @@ class CountdownScreen extends StatefulWidget {
   CountdownScreenState createState() => CountdownScreenState();
 }
 
-const int rule = 20;
-const duration = Duration(minutes: rule);
 const size = Size(400, 400);
 
 class CountdownScreenState extends State<CountdownScreen> with WindowListener {
-  late RocketTimer _timer;
+  RocketTimer? _timer;
   bool inProgress = false;
   late ValueNotifier<bool> forceModeEnabled = ValueNotifier(false);
   int followed = 0;
@@ -36,6 +34,9 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
     titleBarStyle: TitleBarStyle.hidden,
   );
 
+  late int reminder;
+  late int breakTime;
+
   @override
   void initState() {
     setUpForceMode();
@@ -48,21 +49,31 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
       appName: 'CareYourEyes',
       shortcutPolicy: ShortcutPolicy.requireCreate,
     );
+
+    setupTimer();
     super.initState();
+  }
+
+  Future<void> setupTimer() async {
+    var (min, sec) = await PreferenceService.getDuration();
+    reminder = min ?? 20;
+    breakTime = sec ?? 20;
     initTimer();
+    setState(() {});
   }
 
   void initTimer() {
+    final duration = Duration(minutes: reminder);
     _timer = RocketTimer(type: TimerType.countdown, duration: duration);
-    _timer.addListener(() {
-      if (_timer.kDuration == 0) {
+    _timer!.addListener(() {
+      if (_timer!.kDuration == 0) {
         showNotification();
-        _timer.kDuration = inProgress ? duration.inSeconds : rule;
+        _timer!.kDuration = inProgress ? duration.inSeconds : reminder;
         inProgress = !inProgress;
         setState(() {});
       }
     });
-    _timer.start();
+    _timer!.start();
   }
 
   setUpForceMode() {
@@ -81,9 +92,9 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
 
   @override
   Future<void> onWindowBlur() async {
-    if (forceModeEnabled.value) {
-      await handleWindowState();
-    }
+    // if (forceModeEnabled.value) {
+    //   await handleWindowState();
+    // }
     super.onWindowBlur();
   }
 
@@ -100,7 +111,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
 
   @override
   void dispose() {
-    _timer.dispose();
+    _timer!.dispose();
     windowManager.removeListener(this);
     super.dispose();
   }
@@ -124,29 +135,33 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
+    if (_timer == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
     return Scaffold(
       appBar: AppBar(
           title: const Text('Eyes Care'),
           centerTitle: true,
           actions: [
             AnimatedBuilder(
-                animation: _timer,
+                animation: _timer!,
                 builder: (context, _) {
                   return IconButton(
-                    icon: Icon(_timer.status == TimerStatus.pause
+                    icon: Icon(_timer!.status == TimerStatus.pause
                         ? Icons.play_arrow
                         : Icons.pause),
                     onPressed: () {
-                      if (_timer.status == TimerStatus.pause) {
-                        _timer.start();
+                      if (_timer!.status == TimerStatus.pause) {
+                        _timer!.start();
                       } else {
-                        _timer.pause();
+                        _timer!.pause();
                       }
                     },
                   );
                 }),
             IconButton(
-                onPressed: _timer.restart, icon: const Icon(Icons.restart_alt)),
+                onPressed: _timer!.restart,
+                icon: const Icon(Icons.restart_alt)),
             IconButton(
                 onPressed: windowManager.minimize,
                 icon: const Icon(Icons.minimize_rounded)),
@@ -186,8 +201,18 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
               Expanded(
                   child: Column(
                 children: [
-                  RuleTimer(timer: _timer, inProgress: inProgress),
-                  const EditRuleButton(),
+                  RuleTimer(timer: _timer!, inProgress: inProgress),
+                  EditRuleButton(
+                    reminder: reminder,
+                    breakTime: breakTime,
+                    onConfirm: (min, sec) {
+                      breakTime = sec;
+                      reminder = min;
+                      _timer!.dispose();
+                      initTimer();
+                      setState(() {});
+                    },
+                  ),
                 ],
               )),
             ],

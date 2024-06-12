@@ -1,3 +1,4 @@
+import 'package:eyes_care/shared_pref.dart';
 import 'package:eyes_care/widgets/custom_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,19 @@ class DurationPickerDialog extends StatefulWidget {
 class DurationPickerDialogState extends State<DurationPickerDialog> {
   int _minutes = 20;
   int _seconds = 10;
+
+  @override
+  void initState() {
+    setDuration();
+    super.initState();
+  }
+
+  Future<void> setDuration() async {
+    var (min, sec) = await PreferenceService.getDuration();
+    _minutes = min ?? 20;
+    _seconds = sec ?? 20;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {

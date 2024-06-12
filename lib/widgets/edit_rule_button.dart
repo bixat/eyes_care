@@ -1,18 +1,23 @@
+import 'package:eyes_care/shared_pref.dart';
 import 'package:eyes_care/widgets/duration_picker_dialog.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class EditRuleButton extends StatefulWidget {
   const EditRuleButton({
     super.key,
+    required this.onConfirm,
+    required this.reminder,
+    required this.breakTime,
   });
+  final dynamic Function(int, int) onConfirm;
+  final int reminder, breakTime;
 
   @override
   State<EditRuleButton> createState() => _EditRuleButtonState();
 }
 
 class _EditRuleButtonState extends State<EditRuleButton> {
-  int minutes = 20;
-  int seconds = 20;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,9 +34,8 @@ class _EditRuleButtonState extends State<EditRuleButton> {
               builder: (BuildContext context) {
                 return DurationPickerDialog(
                   onConfirm: (int min, int sec) {
-                    minutes = min;
-                    seconds = sec;
-                    setState(() {});
+                    PreferenceService.setDuration(min, sec);
+                    widget.onConfirm(min, sec);
                   },
                 );
               },
@@ -39,7 +43,7 @@ class _EditRuleButtonState extends State<EditRuleButton> {
           },
           child: const Text("Edit Rule"),
         ),
-        Text("${minutes}m - ${seconds}s")
+        Text("${widget.reminder}m - ${widget.breakTime}s")
       ],
     );
   }
