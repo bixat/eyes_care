@@ -22,7 +22,6 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   RocketTimer? _timer;
   bool inProgress = false;
   late ValueNotifier<bool> forceModeEnabled = ValueNotifier(false);
-  int followed = 0;
   WindowOptions windowOptions = const WindowOptions(
     windowButtonVisibility: false,
     size: size,
@@ -92,9 +91,9 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
 
   @override
   Future<void> onWindowBlur() async {
-    // if (forceModeEnabled.value) {
-    //   await handleWindowState();
-    // }
+    if (forceModeEnabled.value) {
+      await handleWindowState();
+    }
     super.onWindowBlur();
   }
 
