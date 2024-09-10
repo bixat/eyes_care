@@ -1,5 +1,6 @@
 import 'package:eyes_care/shared_pref.dart';
 import 'package:flutter/material.dart';
+import 'package:window_manager/window_manager.dart';
 
 class ForceModeCheckBox extends StatelessWidget {
   const ForceModeCheckBox({
@@ -37,5 +38,6 @@ class ForceModeCheckBox extends StatelessWidget {
   void onChanged(value) {
     PreferenceService.setBool(PreferenceService.forceModeKey, value!);
     forceModeEnabled.value = value;
+    windowManager.setFullScreen(false);
   }
 }
