@@ -14,9 +14,9 @@ Eyes Care is a desktop application built with Flutter, designed to help users ma
 
 ## Features
 
-- **Customizable Reminders:** Set personalized reminders to take breaks and rest your eyes every 20 minutes.
-- **Countdown Timer:** Track the time remaining for your next eye break with a built-in countdown timer.
-- **Notifications:** Receive desktop notifications to remind you when it's time to take an eye break.
+- **Customizable Reminder:** Set personalized reminders to take breaks and rest your eyes based on your preferences, with options to follow the 20-20-20 rule or a custom time interval.
+- **Countdown Timer:** Monitor the time remaining until your next scheduled eye break, with a fully adjustable countdown timer feature to suit your needs.
+- **Notifications:** Get customizable desktop notifications or alerts to remind you when it's time for your next eye break with options for forcing take break mode.
 
 ## Coming soon
 
