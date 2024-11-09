@@ -54,7 +54,7 @@ We welcome contributions from the community to enhance the Eyes Care app. To con
 
 ## License
 
-[MIT License](https://opensource.org/licenses/MIT)
+[MIT License](/LICENSE)
 
 ## Tools / Acknowledgements
 
