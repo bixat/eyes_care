@@ -1,5 +1,4 @@
-![20 Rule](https://www.oramca.com/files/2017/02/s5_e0957a473a85a399c5dd742497e7c8c2.jpg)
-
+<a href="https://www.producthunt.com/products/eyescare?utm_source=badge-follow&utm_medium=badge&utm_souce=badge-eyescare" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/follow.svg?product_id=779582&theme=light" alt="EyesCare - Health&#0032;&#0038;&#0032;Fitness&#0044;&#0032;Productivity&#0032; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 # Eyes Care Desktop App
 
 Eyes Care is a desktop application built with Flutter, designed to help users maintain healthy eyes by following the 20-20-20 rule. The app reminds users to take regular breaks and rest their eyes to reduce eye strain and prevent digital eye fatigue.
