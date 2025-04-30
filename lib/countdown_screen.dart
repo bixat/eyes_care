@@ -3,6 +3,7 @@ import 'package:eyes_care/widgets/edit_rule_button.dart';
 import 'package:flutter/material.dart';
 import 'package:rocket_timer/rocket_timer.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:eyes_care/shared_pref.dart';
 import 'package:eyes_care/widgets/force_mode_check_box.dart';
 import 'package:eyes_care/widgets/rule_text.dart';
@@ -265,13 +266,33 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
                 const Spacer(),
 
                 // Version Info
-                Center(
-                  child: Text(
-                    'v1.0.3',
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      // TODO: get from pubspect dynamiclly
+                      'v2.0.0',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 4),
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () {
+                          launchUrl(Uri.parse('https://bixat.dev'));
+                        },
+                        child: Text(
+                          'Powered by bixat.dev team',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
