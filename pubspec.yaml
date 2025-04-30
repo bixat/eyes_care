@@ -39,6 +39,7 @@ dependencies:
   local_notifier: ^0.1.6
   window_manager: ^0.3.9
   shared_preferences: ^2.2.3
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
