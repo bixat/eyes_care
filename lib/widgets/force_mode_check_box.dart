@@ -58,7 +58,8 @@ class ForceModeCheckBox extends StatelessWidget {
                 "Prevent window minimization during breaks",
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: forceModeEnabled.value
-                      ? theme.colorScheme.onPrimaryContainer.withAlpha((0.8 * 255).round())
+                      ? theme.colorScheme.onPrimaryContainer
+                          .withAlpha((0.8 * 255).round())
                       : theme.colorScheme.onSurfaceVariant,
                 ),
               ),

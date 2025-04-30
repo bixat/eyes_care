@@ -52,7 +52,8 @@ class RuleText extends StatelessWidget {
             RichText(
               text: TextSpan(
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onPrimaryContainer.withAlpha((0.8 * 255).round()),
+                  color: theme.colorScheme.onPrimaryContainer
+                      .withAlpha((0.8 * 255).round()),
                   height: 1.5,
                 ),
                 children: const [

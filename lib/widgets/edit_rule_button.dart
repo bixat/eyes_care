@@ -23,7 +23,8 @@ class _EditRuleButtonState extends State<EditRuleButton> {
 
     return Card(
       elevation: 0,
-      color: theme.colorScheme.secondaryContainer.withAlpha((0.3 * 255).round()),
+      color:
+          theme.colorScheme.secondaryContainer.withAlpha((0.3 * 255).round()),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
         onTap: () async {
