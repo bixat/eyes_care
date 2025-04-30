@@ -16,7 +16,7 @@ class CountdownScreen extends StatefulWidget {
   CountdownScreenState createState() => CountdownScreenState();
 }
 
-const size = Size(400, 600); // Increased height for better layout
+const size = Size(500, 800);
 
 class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   RocketTimer? _timer;

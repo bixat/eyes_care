@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await windowManager.ensureInitialized();
+  await windowManager.ensureInitialized();
   runApp(const CareYourEyes());
 }
 
