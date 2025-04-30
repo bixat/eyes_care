@@ -3,6 +3,7 @@ import 'package:eyes_care/widgets/edit_rule_button.dart';
 import 'package:flutter/material.dart';
 import 'package:rocket_timer/rocket_timer.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:eyes_care/shared_pref.dart';
 import 'package:eyes_care/widgets/force_mode_check_box.dart';
 import 'package:eyes_care/widgets/rule_text.dart';
@@ -16,11 +17,12 @@ class CountdownScreen extends StatefulWidget {
   CountdownScreenState createState() => CountdownScreenState();
 }
 
-const size = Size(400, 400);
+const size = Size(500, 900);
 
 class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   RocketTimer? _timer;
   bool inProgress = false;
+  bool isPaused = false;
   late ValueNotifier<bool> forceModeEnabled = ValueNotifier(false);
   WindowOptions windowOptions = const WindowOptions(
     windowButtonVisibility: false,
@@ -132,90 +134,171 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
     }
   }
 
+  void toggleTimer() {
+    if (isPaused) {
+      _timer?.start();
+    } else {
+      _timer?.stop();
+    }
+    setState(() {
+      isPaused = !isPaused;
+    });
+  }
+
+  void resetTimer() {
+    final duration = Duration(minutes: reminder);
+    _timer?.stop();
+    _timer?.kDuration = duration.inSeconds;
+    if (isPaused) {
+      setState(() {
+        isPaused = false;
+        inProgress = false;
+      });
+    }
+    _timer?.start();
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (_timer == null) {
-      return const Center(child: CircularProgressIndicator());
-    }
+    final theme = Theme.of(context);
+
     return Scaffold(
-      appBar: AppBar(
-          title: const Text('Eyes Care'),
-          centerTitle: true,
-          actions: [
-            AnimatedBuilder(
-                animation: _timer!,
-                builder: (context, _) {
-                  return IconButton(
-                    icon: Icon(_timer!.status == TimerStatus.pause
-                        ? Icons.play_arrow
-                        : Icons.pause),
-                    onPressed: () {
-                      if (_timer!.status == TimerStatus.pause) {
-                        _timer!.start();
-                      } else {
-                        _timer!.pause();
-                      }
-                    },
-                  );
-                }),
-            IconButton(
-                onPressed: _timer!.restart,
-                icon: const Icon(Icons.restart_alt)),
-            IconButton(
-                onPressed: windowManager.minimize,
-                icon: const Icon(Icons.minimize_rounded)),
-          ],
-          leading: ValueListenableBuilder(
-              valueListenable: themeNotifier,
-              builder: (context, _, __) {
-                final isLight = themeNotifier.value.index == 1;
-                return IconButton(
-                    onPressed: () {
-                      themeNotifier.value =
-                          isLight ? ThemeMode.dark : ThemeMode.light;
-                    },
-                    icon: Icon(isLight ? Icons.dark_mode : Icons.light_mode));
-              })),
+      backgroundColor: Colors.transparent,
       body: Container(
-          padding: const EdgeInsets.all(8.0),
-          child: Flex(
-            direction: inProgress ? Axis.vertical : Axis.horizontal,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              theme.colorScheme.surface,
+              theme.colorScheme.surface.withAlpha((0.3 * 255).round()),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // App Bar
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (inProgress)
-                      Text(
-                          "look away from your screen and focus on something 20 feet away for 20 seconds.",
-                          style: Theme.of(context).textTheme.headlineMedium)
-                    else
-                      const RuleText(),
-                    ForceModeCheckBox(forceModeEnabled: forceModeEnabled)
+                    Text(
+                      'Eyes Care',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.primary,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        themeNotifier.value == ThemeMode.light
+                            ? Icons.dark_mode_rounded
+                            : Icons.light_mode_rounded,
+                      ),
+                      onPressed: () {
+                        themeNotifier.value =
+                            themeNotifier.value == ThemeMode.light
+                                ? ThemeMode.dark
+                                : ThemeMode.light;
+                      },
+                    ),
                   ],
                 ),
-              ),
-              Expanded(
-                  child: Column(
-                children: [
-                  RuleTimer(timer: _timer!, inProgress: inProgress),
-                  EditRuleButton(
-                    reminder: reminder,
-                    breakTime: breakTime,
-                    onConfirm: (min, sec) {
-                      breakTime = sec;
-                      reminder = min;
-                      _timer!.dispose();
-                      initTimer();
-                      setState(() {});
-                    },
+                const SizedBox(height: 24),
+
+                // Timer Section
+                if (_timer != null)
+                  Column(
+                    children: [
+                      RuleTimer(timer: _timer!, inProgress: inProgress),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AnimatedBuilder(
+                              animation: _timer!,
+                              builder: (context, _) {
+                                return IconButton(
+                                  icon: Icon(_timer!.status == TimerStatus.pause
+                                      ? Icons.play_arrow
+                                      : Icons.pause),
+                                  onPressed: () {
+                                    if (_timer!.status == TimerStatus.pause) {
+                                      _timer!.start();
+                                    } else {
+                                      _timer!.pause();
+                                    }
+                                  },
+                                );
+                              }),
+                          IconButton(
+                              onPressed: _timer!.restart,
+                              icon: const Icon(Icons.restart_alt)),
+                        ],
+                      )
+                    ],
                   ),
-                ],
-              )),
-            ],
-          )),
+                const SizedBox(height: 32),
+
+                // Rule Text Card
+                const RuleText(),
+                const SizedBox(height: 24),
+
+                // Edit Rule Button
+                EditRuleButton(
+                  reminder: reminder,
+                  breakTime: breakTime,
+                  onConfirm: (min, sec) {
+                    reminder = min;
+                    breakTime = sec;
+                    initTimer();
+                    setState(() {});
+                  },
+                ),
+                const SizedBox(height: 16),
+
+                // Force Mode Toggle
+                ForceModeCheckBox(forceModeEnabled: forceModeEnabled),
+
+                const Spacer(),
+
+                // Version Info
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      // TODO: get from pubspect dynamiclly
+                      'v2.0.0',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () {
+                          launchUrl(Uri.parse('https://bixat.dev'));
+                        },
+                        child: Text(
+                          'Powered by bixat.dev team',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

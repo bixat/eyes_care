@@ -3,6 +3,13 @@
 
 Eyes Care is a desktop application built with Flutter, designed to help users maintain healthy eyes by following the 20-20-20 rule. The app reminds users to take regular breaks and rest their eyes to reduce eye strain and prevent digital eye fatigue.
 
+## Screenshots
+
+<div align="center">
+  <img src="screenshots/light.png" alt="Light Theme Screenshot" width="400"/>
+  <img src="screenshots/dark.png" alt="Dark Theme Screenshot" width="400"/>
+</div>
+
 ## Support
 <a href="https://github.com/bixat/eyes_care/releases/latest/download/EyesCaremacOS.dmg"><img src="https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0" height=25></a><a href="https://github.com/bixat/eyes_care/releases/latest/download/EyesCareWindows.zip"><img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" height=25></a><a href="https://github.com/bixat/eyes_care/releases/latest/download/EyesCareLinux.tar.gz"><img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" height=25></a>
 

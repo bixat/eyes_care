@@ -1,6 +1,7 @@
 import 'package:eyes_care/countdown_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,15 +18,52 @@ class CareYourEyes extends StatelessWidget {
     return ValueListenableBuilder(
         valueListenable: themeNotifier,
         builder: (context, _, __) {
+          const primaryColor = Color(0xFF6C63FF);
+          const secondaryColor = Color(0xFF32CD32);
+
           return MaterialApp(
             title: 'Eyes Care',
             debugShowCheckedModeBanner: false,
             themeMode: themeNotifier.value,
-            theme: ThemeData.light().copyWith(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue)),
+            theme: ThemeData(
+              useMaterial3: true,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: primaryColor,
+                secondary: secondaryColor,
+              ),
+              textTheme: GoogleFonts.poppinsTextTheme(),
+              cardTheme: CardTheme(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              appBarTheme: const AppBarTheme(
+                elevation: 0,
+                centerTitle: true,
+                backgroundColor: Colors.transparent,
+              ),
+            ),
             darkTheme: ThemeData.dark().copyWith(
-                colorScheme: ColorScheme.fromSeed(
-                    seedColor: Colors.blue, brightness: Brightness.dark)),
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: primaryColor,
+                secondary: secondaryColor,
+                brightness: Brightness.dark,
+              ),
+              textTheme:
+                  GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
+              cardTheme: CardTheme(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              appBarTheme: const AppBarTheme(
+                elevation: 0,
+                centerTitle: true,
+                backgroundColor: Colors.transparent,
+              ),
+            ),
             home: const CountdownScreen(),
           );
         });
