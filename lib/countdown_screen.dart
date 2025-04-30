@@ -151,6 +151,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
     if (isPaused) {
       setState(() {
         isPaused = false;
+        inProgress = false;
       });
     }
     _timer?.start();

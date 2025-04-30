@@ -89,6 +89,7 @@ class RuleTimer extends StatelessWidget {
                     backgroundColor: theme.colorScheme.surfaceContainerHighest,
                     strokeWidth: stroke,
                     value: value,
+                    strokeCap: StrokeCap.round,
                   ),
                 ),
               ),
