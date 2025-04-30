@@ -42,7 +42,7 @@ class RuleText extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              "Give your eyes a rest by following the 20-20-20 rule:",
+              "Give your eyes a rest by following the 20-20-20 rule",
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: theme.colorScheme.onPrimaryContainer,
                 fontWeight: FontWeight.w600,

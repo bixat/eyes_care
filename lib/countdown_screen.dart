@@ -16,11 +16,12 @@ class CountdownScreen extends StatefulWidget {
   CountdownScreenState createState() => CountdownScreenState();
 }
 
-const size = Size(500, 800);
+const size = Size(500, 900);
 
 class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   RocketTimer? _timer;
   bool inProgress = false;
+  bool isPaused = false;
   late ValueNotifier<bool> forceModeEnabled = ValueNotifier(false);
   WindowOptions windowOptions = const WindowOptions(
     windowButtonVisibility: false,
@@ -132,6 +133,29 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
     }
   }
 
+  void toggleTimer() {
+    if (isPaused) {
+      _timer?.start();
+    } else {
+      _timer?.stop();
+    }
+    setState(() {
+      isPaused = !isPaused;
+    });
+  }
+
+  void resetTimer() {
+    final duration = Duration(minutes: reminder);
+    _timer?.stop();
+    _timer?.kDuration = duration.inSeconds;
+    if (isPaused) {
+      setState(() {
+        isPaused = false;
+      });
+    }
+    _timer?.start();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -186,7 +210,35 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
 
                 // Timer Section
                 if (_timer != null)
-                  RuleTimer(timer: _timer!, inProgress: inProgress),
+                  Column(
+                    children: [
+                      RuleTimer(timer: _timer!, inProgress: inProgress),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AnimatedBuilder(
+                              animation: _timer!,
+                              builder: (context, _) {
+                                return IconButton(
+                                  icon: Icon(_timer!.status == TimerStatus.pause
+                                      ? Icons.play_arrow
+                                      : Icons.pause),
+                                  onPressed: () {
+                                    if (_timer!.status == TimerStatus.pause) {
+                                      _timer!.start();
+                                    } else {
+                                      _timer!.pause();
+                                    }
+                                  },
+                                );
+                              }),
+                          IconButton(
+                              onPressed: _timer!.restart,
+                              icon: const Icon(Icons.restart_alt)),
+                        ],
+                      )
+                    ],
+                  ),
                 const SizedBox(height: 32),
 
                 // Rule Text Card
