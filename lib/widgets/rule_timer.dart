@@ -16,7 +16,6 @@ class RuleTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final stroke = inBreak ? 25.0 : 15.0;
 
     return SizedBox(
       height: circleSize + 40,
@@ -87,7 +86,7 @@ class RuleTimer extends StatelessWidget {
                         ? theme.colorScheme.secondary
                         : theme.colorScheme.primary,
                     backgroundColor: theme.colorScheme.surfaceContainerHighest,
-                    strokeWidth: stroke,
+                    strokeWidth: 15.0,
                     value: value,
                     strokeCap: StrokeCap.round,
                   ),
