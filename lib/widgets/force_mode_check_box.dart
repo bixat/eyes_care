@@ -1,18 +1,20 @@
-import 'package:eyes_care/shared_pref.dart';
 import 'package:flutter/material.dart';
-import 'package:window_manager/window_manager.dart';
 
 class SwitcherSetting extends StatelessWidget {
   final String title;
   final String subtitle;
+  final IconData icon;
   const SwitcherSetting({
     super.key,
     required this.enabled,
     required this.title,
     required this.subtitle,
+    required this.onChanged,
+    required this.icon,
   });
 
   final ValueNotifier<bool> enabled;
+  final Function(bool) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class SwitcherSetting extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Icon(
-                    Icons.lock_rounded,
+                    icon,
                     color: enabled.value
                         ? theme.colorScheme.primary
                         : theme.colorScheme.onSurfaceVariant,
@@ -74,12 +76,5 @@ class SwitcherSetting extends StatelessWidget {
             ),
           );
         });
-  }
-
-  void onChanged(bool? value) {
-    if (value == null) return;
-    PreferenceService.setBool(PreferenceService.forceModeKey, value);
-    enabled.value = value;
-    windowManager.setFullScreen(false);
   }
 }

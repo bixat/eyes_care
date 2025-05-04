@@ -2,6 +2,8 @@ import 'package:eyes_care/main.dart';
 import 'package:eyes_care/widgets/edit_rule_button.dart';
 import 'package:eyes_care/widgets/work_break_info.dart';
 import 'package:flutter/material.dart';
+import 'package:launch_at_startup/launch_at_startup.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rocket_timer/rocket_timer.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -25,6 +27,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   bool inBreak = false;
   bool isPaused = false;
   late ValueNotifier<bool> forceModeEnabled = ValueNotifier(false);
+  late ValueNotifier<bool> startUpModeEnabled = ValueNotifier(false);
   WindowOptions windowOptions = const WindowOptions(
     windowButtonVisibility: false,
     size: size,
@@ -41,9 +44,11 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   Duration get workDuration => Duration(minutes: reminder);
   Duration get breakDuration => Duration(seconds: breakTime);
 
+  final appVersion = ValueNotifier<String?>(null);
+
   @override
   void initState() {
-    setUpForceMode();
+    setUpSettings();
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
       await windowManager.focus();
@@ -80,8 +85,13 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
     _timer!.start();
   }
 
-  setUpForceMode() {
+  setUpSettings() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    appVersion.value = packageInfo.version;
     PreferenceService.getBool(PreferenceService.forceModeKey).then((value) {
+      forceModeEnabled.value = value ?? false;
+    });
+    PreferenceService.getBool(PreferenceService.startupModeKey).then((value) {
       forceModeEnabled.value = value ?? false;
     });
   }
@@ -250,13 +260,16 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      // TODO: get from pubspect dynamiclly
-                      'v2.0.0',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
+                    ValueListenableBuilder(
+                        valueListenable: appVersion,
+                        builder: (context, value, _) {
+                          return Text(
+                            'v$value',
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          );
+                        }),
                     const SizedBox(height: 4),
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
@@ -291,6 +304,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
           reminder: reminder,
           breakTime: breakTime,
           forceModeEnabled: forceModeEnabled,
+          startUpModeEnabled: startUpModeEnabled,
           onConfirm: (min, sec) {
             setState(() {
               reminder = min;
@@ -319,6 +333,7 @@ class Settings extends StatelessWidget {
   final int reminder;
   final int breakTime;
   final ValueNotifier<bool> forceModeEnabled;
+  final ValueNotifier<bool> startUpModeEnabled;
   final Function(int, int) onConfirm;
 
   const Settings({
@@ -327,6 +342,7 @@ class Settings extends StatelessWidget {
     required this.breakTime,
     required this.forceModeEnabled,
     required this.onConfirm,
+    required this.startUpModeEnabled,
   }) : super(key: key);
 
   @override
@@ -344,16 +360,38 @@ class Settings extends StatelessWidget {
           ),
           SwitcherSetting(
             enabled: forceModeEnabled,
+            icon: Icons.lock_rounded,
             title: "Force Mode",
             subtitle: "Prevent window minimization during breaks",
+            onChanged: _onUpdateForceMode,
           ),
           SwitcherSetting(
-            enabled: forceModeEnabled,
-            title: "Force Mode",
-            subtitle: "Prevent window minimization during breaks",
+            enabled: startUpModeEnabled,
+            icon: Icons.start,
+            title: "Startup at Login",
+            subtitle: "Launch application automatically at system startup",
+            onChanged: _onUpdateStartupMode,
           ),
         ],
       ),
     );
+  }
+
+  void _onUpdateForceMode(bool? value) {
+    if (value == null) return;
+    PreferenceService.setBool(PreferenceService.forceModeKey, value);
+    forceModeEnabled.value = value;
+    windowManager.setFullScreen(false);
+  }
+
+  void _onUpdateStartupMode(bool? value) {
+    if (value == null) return;
+    startUpModeEnabled.value = value;
+    PreferenceService.setBool(PreferenceService.startupModeKey, value);
+    if (value) {
+      launchAtStartup.disable();
+    } else {
+      launchAtStartup.disable();
+    }
   }
 }
