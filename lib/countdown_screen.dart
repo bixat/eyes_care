@@ -1,5 +1,6 @@
 import 'package:eyes_care/main.dart';
 import 'package:eyes_care/widgets/edit_rule_button.dart';
+import 'package:eyes_care/widgets/work_break_info.dart';
 import 'package:flutter/material.dart';
 import 'package:rocket_timer/rocket_timer.dart';
 import 'package:window_manager/window_manager.dart';
@@ -17,7 +18,7 @@ class CountdownScreen extends StatefulWidget {
   CountdownScreenState createState() => CountdownScreenState();
 }
 
-const size = Size(500, 900);
+const size = Size(500, 750);
 
 class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   RocketTimer? _timer;
@@ -204,6 +205,10 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
                   Column(
                     children: [
                       RuleTimer(timer: _timer!, inBreak: inBreak),
+                      WorkBreakInfo(
+                        reminder: reminder,
+                        breakTime: breakTime,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -226,6 +231,11 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
                           IconButton(
                               onPressed: _restartTimer,
                               icon: const Icon(Icons.restart_alt)),
+                          IconButton(
+                              onPressed: () {
+                                _showSettings(context);
+                              },
+                              icon: const Icon(Icons.settings)),
                         ],
                       )
                     ],
@@ -234,24 +244,6 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
 
                 // Rule Text Card
                 const RuleText(),
-                const SizedBox(height: 24),
-
-                // Edit Rule Button
-                EditRuleButton(
-                  reminder: reminder,
-                  breakTime: breakTime,
-                  onConfirm: (min, sec) {
-                    reminder = min;
-                    breakTime = sec;
-                    initTimer();
-                    setState(() {});
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                // Force Mode Toggle
-                ForceModeCheckBox(forceModeEnabled: forceModeEnabled),
-
                 const Spacer(),
 
                 // Version Info
@@ -291,10 +283,77 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
     );
   }
 
+  Future<dynamic> _showSettings(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Settings(
+          reminder: reminder,
+          breakTime: breakTime,
+          forceModeEnabled: forceModeEnabled,
+          onConfirm: (min, sec) {
+            setState(() {
+              reminder = min;
+              breakTime = sec;
+              _restartTimer();
+            });
+            PreferenceService.setDuration(min, sec);
+            PreferenceService.setBool(
+                PreferenceService.forceModeKey, forceModeEnabled.value);
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
+  }
+
   void _restartTimer() {
     _timer!.restart();
     inBreak = false;
     _timer!.kDuration = workDuration.inSeconds;
     setState(() {});
+  }
+}
+
+class Settings extends StatelessWidget {
+  final int reminder;
+  final int breakTime;
+  final ValueNotifier<bool> forceModeEnabled;
+  final Function(int, int) onConfirm;
+
+  const Settings({
+    Key? key,
+    required this.reminder,
+    required this.breakTime,
+    required this.forceModeEnabled,
+    required this.onConfirm,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 16.0,
+        children: [
+          EditRuleButton(
+            reminder: reminder,
+            breakTime: breakTime,
+            onConfirm: onConfirm,
+          ),
+          SwitcherSetting(
+            enabled: forceModeEnabled,
+            title: "Force Mode",
+            subtitle: "Prevent window minimization during breaks",
+          ),
+          SwitcherSetting(
+            enabled: forceModeEnabled,
+            title: "Force Mode",
+            subtitle: "Prevent window minimization during breaks",
+          ),
+        ],
+      ),
+    );
   }
 }

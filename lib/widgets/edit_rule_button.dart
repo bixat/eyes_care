@@ -1,5 +1,6 @@
 import 'package:eyes_care/shared_pref.dart';
 import 'package:eyes_care/widgets/duration_picker_dialog.dart';
+import 'package:eyes_care/widgets/work_break_info.dart';
 import 'package:flutter/material.dart';
 
 class EditRuleButton extends StatefulWidget {
@@ -57,45 +58,9 @@ class _EditRuleButtonState extends State<EditRuleButton> {
                 ),
               ),
               const SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "${widget.reminder}m",
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          color: theme.colorScheme.onSurface,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        " work",
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "${widget.breakTime}s",
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          color: theme.colorScheme.secondary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        " break",
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+              WorkBreakInfo(
+                reminder: widget.reminder,
+                breakTime: widget.breakTime,
               ),
               const Spacer(),
               Icon(
