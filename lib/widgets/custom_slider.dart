@@ -64,7 +64,7 @@ class CustomSlider extends StatelessWidget {
           ),
           child: Slider(
             value: value.toDouble(),
-            min: 10,
+            min: 1,
             max: 60,
             divisions: 50,
             onChanged: onChanged,
