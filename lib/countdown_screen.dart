@@ -174,7 +174,6 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
               children: [
                 // App Bar
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Eyes Care',
@@ -183,6 +182,12 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
                         color: theme.colorScheme.primary,
                       ),
                     ),
+                    Spacer(),
+                    IconButton(
+                        onPressed: () {
+                          _showSettings(context);
+                        },
+                        icon: const Icon(Icons.settings)),
                     IconButton(
                       icon: Icon(
                         themeNotifier.value == ThemeMode.light
@@ -230,12 +235,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
                               }),
                           IconButton(
                               onPressed: _restartTimer,
-                              icon: const Icon(Icons.restart_alt)),
-                          IconButton(
-                              onPressed: () {
-                                _showSettings(context);
-                              },
-                              icon: const Icon(Icons.settings)),
+                              icon: const Icon(Icons.restart_alt))
                         ],
                       )
                     ],
