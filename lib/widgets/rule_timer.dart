@@ -5,18 +5,18 @@ class RuleTimer extends StatelessWidget {
   const RuleTimer({
     super.key,
     required RocketTimer timer,
-    required this.inProgress,
+    required this.inBreak,
   }) : _timer = timer;
 
   final RocketTimer _timer;
-  final bool inProgress;
+  final bool inBreak;
 
   final circleSize = 200.0;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final stroke = inProgress ? 25.0 : 15.0;
+    final stroke = inBreak ? 25.0 : 15.0;
 
     return SizedBox(
       height: circleSize + 40,
@@ -39,7 +39,7 @@ class RuleTimer extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: (inProgress
+                      color: (inBreak
                               ? theme.colorScheme.secondary
                               : theme.colorScheme.primary)
                           .withAlpha((0.2 * 255).round()),
@@ -57,12 +57,12 @@ class RuleTimer extends StatelessWidget {
                     timeString,
                     style: theme.textTheme.displayMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: inProgress
+                      color: inBreak
                           ? theme.colorScheme.secondary
                           : theme.colorScheme.primary,
                     ),
                   ),
-                  if (inProgress)
+                  if (inBreak)
                     Text(
                       'Break Time',
                       style: theme.textTheme.titleMedium?.copyWith(
@@ -83,7 +83,7 @@ class RuleTimer extends StatelessWidget {
                   height: circleSize,
                   width: circleSize,
                   child: CircularProgressIndicator(
-                    color: inProgress
+                    color: inBreak
                         ? theme.colorScheme.secondary
                         : theme.colorScheme.primary,
                     backgroundColor: theme.colorScheme.surfaceContainerHighest,

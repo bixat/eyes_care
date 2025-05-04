@@ -21,7 +21,7 @@ const size = Size(500, 900);
 
 class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   RocketTimer? _timer;
-  bool inProgress = false;
+  bool inBreak = false;
   bool isPaused = false;
   late ValueNotifier<bool> forceModeEnabled = ValueNotifier(false);
   WindowOptions windowOptions = const WindowOptions(
@@ -37,6 +37,8 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
 
   late int reminder;
   late int breakTime;
+  Duration get workDuration => Duration(minutes: reminder);
+  Duration get breakDuration => Duration(seconds: breakTime);
 
   @override
   void initState() {
@@ -64,13 +66,13 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   }
 
   void initTimer() {
-    final duration = Duration(minutes: reminder);
-    _timer = RocketTimer(type: TimerType.countdown, duration: duration);
+    _timer = RocketTimer(type: TimerType.countdown, duration: workDuration);
     _timer!.addListener(() {
       if (_timer!.kDuration == 0) {
         showNotification();
-        _timer!.kDuration = inProgress ? duration.inSeconds : reminder;
-        inProgress = !inProgress;
+        _timer!.kDuration =
+            inBreak ? workDuration.inSeconds : breakDuration.inSeconds;
+        inBreak = !inBreak;
         setState(() {});
       }
     });
@@ -100,7 +102,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   }
 
   Future<void> handleWindowState() async {
-    if (inProgress) {
+    if (inBreak) {
       await windowManager.show();
       await windowManager.focus();
       await windowManager.setFullScreen(true);
@@ -119,8 +121,8 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
 
   Future<void> showNotification() async {
     LocalNotification notification = LocalNotification(
-      title: inProgress ? "Stay Focused 💪" : "Take a Moment 🌟",
-      body: inProgress
+      title: inBreak ? "Stay Focused 💪" : "Take a Moment 🌟",
+      body: inBreak
           ? "Keep your gaze on the screen. Remember, every 20 minutes, take a 20-second break looking at something 20 feet away."
           : "Step back from the screen and focus on something 20 feet away for 20 seconds. Your eyes will thank you!",
     );
@@ -143,19 +145,6 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
     setState(() {
       isPaused = !isPaused;
     });
-  }
-
-  void resetTimer() {
-    final duration = Duration(minutes: reminder);
-    _timer?.stop();
-    _timer?.kDuration = duration.inSeconds;
-    if (isPaused) {
-      setState(() {
-        isPaused = false;
-        inProgress = false;
-      });
-    }
-    _timer?.start();
   }
 
   @override
@@ -214,7 +203,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
                 if (_timer != null)
                   Column(
                     children: [
-                      RuleTimer(timer: _timer!, inProgress: inProgress),
+                      RuleTimer(timer: _timer!, inBreak: inBreak),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -235,7 +224,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
                                 );
                               }),
                           IconButton(
-                              onPressed: _timer!.restart,
+                              onPressed: _restartTimer,
                               icon: const Icon(Icons.restart_alt)),
                         ],
                       )
@@ -300,5 +289,12 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
         ),
       ),
     );
+  }
+
+  void _restartTimer() {
+    _timer!.restart();
+    inBreak = false;
+    _timer!.kDuration = workDuration.inSeconds;
+    setState(() {});
   }
 }
