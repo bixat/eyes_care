@@ -1,5 +1,6 @@
 import Cocoa
 import FlutterMacOS
+import LaunchAtLogin
 import window_manager
 
 class MainFlutterWindow: NSWindow {
