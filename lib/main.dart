@@ -34,7 +34,7 @@ class CareYourEyes extends StatelessWidget {
     return ValueListenableBuilder(
         valueListenable: themeNotifier,
         builder: (context, _, __) {
-          const primaryColor = Color(0xFF6C63FF);
+          const primaryColor = Color(0xFF5BE0E5);
           const secondaryColor = Color(0xFF32CD32);
 
           return MaterialApp(
