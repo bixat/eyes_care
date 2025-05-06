@@ -92,7 +92,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
       forceModeEnabled.value = value ?? false;
     });
     PreferenceService.getBool(PreferenceService.startupModeKey).then((value) {
-      forceModeEnabled.value = value ?? false;
+      startUpModeEnabled.value = value ?? false;
     });
   }
 
