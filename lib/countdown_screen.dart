@@ -192,7 +192,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
                         color: theme.colorScheme.primary,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     IconButton(
                         onPressed: () {
                           _showSettings(context);
