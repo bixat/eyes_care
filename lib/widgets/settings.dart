@@ -65,7 +65,7 @@ class Settings extends StatelessWidget {
     startUpModeEnabled.value = value;
     PreferenceService.setBool(PreferenceService.startupModeKey, value);
     if (value) {
-      launchAtStartup.disable();
+      launchAtStartup.enable();
     } else {
       launchAtStartup.disable();
     }
