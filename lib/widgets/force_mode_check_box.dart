@@ -1,32 +1,38 @@
-import 'package:eyes_care/shared_pref.dart';
 import 'package:flutter/material.dart';
-import 'package:window_manager/window_manager.dart';
 
-class ForceModeCheckBox extends StatelessWidget {
-  const ForceModeCheckBox({
+class SwitcherSetting extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  const SwitcherSetting({
     super.key,
-    required this.forceModeEnabled,
+    required this.enabled,
+    required this.title,
+    required this.subtitle,
+    required this.onChanged,
+    required this.icon,
   });
 
-  final ValueNotifier<bool> forceModeEnabled;
+  final ValueNotifier<bool> enabled;
+  final Function(bool) onChanged;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return ValueListenableBuilder(
-        valueListenable: forceModeEnabled,
+        valueListenable: enabled,
         builder: (context, _, __) {
           return AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              color: forceModeEnabled.value
+              color: enabled.value
                   ? theme.colorScheme.primaryContainer
                   : theme.colorScheme.surface,
             ),
             child: ListTile(
-              onTap: () => onChanged(!forceModeEnabled.value),
+              onTap: () => onChanged(!enabled.value),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
@@ -38,44 +44,37 @@ class ForceModeCheckBox extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Icon(
-                    Icons.lock_rounded,
-                    color: forceModeEnabled.value
+                    icon,
+                    color: enabled.value
                         ? theme.colorScheme.primary
                         : theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
               ),
               title: Text(
-                "Force Mode",
+                title,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: forceModeEnabled.value
+                  color: enabled.value
                       ? theme.colorScheme.onPrimaryContainer
                       : theme.colorScheme.onSurface,
                 ),
               ),
               subtitle: Text(
-                "Prevent window minimization during breaks",
+                subtitle,
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: forceModeEnabled.value
+                  color: enabled.value
                       ? theme.colorScheme.onPrimaryContainer
                           .withAlpha((0.8 * 255).round())
                       : theme.colorScheme.onSurfaceVariant,
                 ),
               ),
               trailing: Switch(
-                value: forceModeEnabled.value,
+                value: enabled.value,
                 onChanged: onChanged,
               ),
             ),
           );
         });
-  }
-
-  void onChanged(bool? value) {
-    if (value == null) return;
-    PreferenceService.setBool(PreferenceService.forceModeKey, value);
-    forceModeEnabled.value = value;
-    windowManager.setFullScreen(false);
   }
 }

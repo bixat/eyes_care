@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceService {
   static const forceModeKey = "force_mode";
+  static const startupModeKey = "startup_mode";
   static const minutes = "minutes";
   static const seconds = "seconds";
 

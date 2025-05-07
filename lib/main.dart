@@ -1,7 +1,23 @@
+import 'dart:io';
+
 import 'package:eyes_care/countdown_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:launch_at_startup/launch_at_startup.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+Future<void> initLaunchStartup() async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+  launchAtStartup.setup(
+    appName: packageInfo.appName,
+    appPath: Platform.resolvedExecutable,
+    // Set packageName parameter to support MSIX.
+    // TODO: update package name
+    packageName: 'com.example.keepYourEyes',
+  );
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +34,7 @@ class CareYourEyes extends StatelessWidget {
     return ValueListenableBuilder(
         valueListenable: themeNotifier,
         builder: (context, _, __) {
-          const primaryColor = Color(0xFF6C63FF);
+          const primaryColor = Color(0xFF5BE0E5);
           const secondaryColor = Color(0xFF32CD32);
 
           return MaterialApp(
