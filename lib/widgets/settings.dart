@@ -3,6 +3,7 @@ import 'package:eyes_care/main.dart';
 import 'package:eyes_care/shared_pref.dart';
 import 'package:eyes_care/widgets/edit_rule_button.dart';
 import 'package:eyes_care/widgets/force_mode_check_box.dart';
+import 'package:eyes_care/services/prayer_service.dart';
 import 'package:flutter/material.dart';
 import 'package:launch_at_startup/launch_at_startup.dart';
 import 'package:window_manager/window_manager.dart';
@@ -44,32 +45,137 @@ class Settings extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 16.0,
-        children: [
-          // Language Selector
-          _buildLanguageCard(context, loc, theme, languages),
-          EditRuleButton(
-            reminder: reminder,
-            breakTime: breakTime,
-            onConfirm: onConfirm,
-          ),
-          SwitcherSetting(
-            enabled: forceModeEnabled,
-            icon: Icons.lock_rounded,
-            title: loc.forceMode,
-            subtitle: loc.forceModeSubtitle,
-            onChanged: _onUpdateForceMode,
-          ),
-          SwitcherSetting(
-            enabled: startUpModeEnabled,
-            icon: Icons.start,
-            title: loc.startupAtLogin,
-            subtitle: loc.startupAtLoginSubtitle,
-            onChanged: _onUpdateStartupMode,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 16.0,
+          children: [
+            // Language Selector
+            _buildLanguageCard(context, loc, theme, languages),
+            EditRuleButton(
+              reminder: reminder,
+              breakTime: breakTime,
+              onConfirm: onConfirm,
+            ),
+            SwitcherSetting(
+              enabled: forceModeEnabled,
+              icon: Icons.lock_rounded,
+              title: loc.forceMode,
+              subtitle: loc.forceModeSubtitle,
+              onChanged: _onUpdateForceMode,
+            ),
+            SwitcherSetting(
+              enabled: startUpModeEnabled,
+              icon: Icons.start,
+              title: loc.startupAtLogin,
+              subtitle: loc.startupAtLoginSubtitle,
+              onChanged: _onUpdateStartupMode,
+            ),
+            ListenableBuilder(
+              listenable: PrayerService(),
+              builder: (context, _) {
+                final prayerService = PrayerService();
+                return Column(
+                  children: [
+                    SwitcherSetting(
+                      enabled: ValueNotifier(prayerService.isMuslimModeEnabled),
+                      icon: Icons.mosque,
+                      title: loc.muslimMode,
+                      subtitle: loc.muslimModeSubtitle,
+                      onChanged: (val) {
+                        if (val != null) prayerService.toggleMuslimMode(val);
+                      },
+                    ),
+                    if (prayerService.isMuslimModeEnabled)
+                    _buildLocationCard(context, theme, prayerService),
+                ],
+              );
+            },
           ),
         ],
+        ),
+      ),
+    );
+  }
+
+                  Widget _buildLocationCard(
+    BuildContext context,
+    ThemeData theme,
+    PrayerService prayerService,
+  ) {
+    final loc = AppLocalizations.of(context);
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: theme.colorScheme.outlineVariant, width: 1),
+      ),
+      child: InkWell(
+        onTap: () => prayerService.detectLocation(context: context),
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      theme.colorScheme.secondaryContainer,
+                      theme.colorScheme.secondaryContainer.withAlpha(180),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  Icons.location_on_rounded,
+                  color: theme.colorScheme.secondary,
+                  size: 28,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      loc.location,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      prayerService.city != null
+                          ? '${prayerService.city}, ${prayerService.country}'
+                          : loc.tapToDetect,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: theme.colorScheme.onSurface,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  loc.detect,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: theme.colorScheme.onPrimaryContainer,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -244,7 +350,7 @@ class Settings extends StatelessWidget {
         PreferenceService.setLanguage(lang['code']!);
         Navigator.pop(context);
       },
-      
+
       borderRadius: BorderRadius.circular(12),
       child: Container(
         decoration: BoxDecoration(

@@ -28,5 +28,9 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Taline requires location access to calculate exact prayer times.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Taline requires location access to calculate exact prayer times.</string>
 </dict>
 </plist>

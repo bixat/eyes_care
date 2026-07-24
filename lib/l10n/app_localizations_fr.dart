@@ -109,4 +109,65 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get system => 'Système';
+
+  @override
+  String get muslimMode => 'Mode Musulman';
+
+  @override
+  String get muslimModeSubtitle => 'Afficher les heures de prière et l\'Adhan';
+
+  @override
+  String get location => 'Emplacement';
+
+  @override
+  String get tapToDetect => 'Appuyer pour détecter';
+
+  @override
+  String get detect => 'Détecter';
+
+  @override
+  String get eyeCare => 'Soins des Yeux';
+
+  @override
+  String get prayerTimes => 'Heures de Prière';
+
+  @override
+  String get fajr => 'Fajr';
+
+  @override
+  String get sunrise => 'Lever du soleil';
+
+  @override
+  String get dhuhr => 'Dhuhr';
+
+  @override
+  String get asr => 'Asr';
+
+  @override
+  String get maghrib => 'Maghrib';
+
+  @override
+  String get isha => 'Isha';
+
+  @override
+  String get nextPrayer => 'Prochaine';
+
+  @override
+  String get locationDisabled => 'Localisation Désactivée';
+
+  @override
+  String get enableLocationPrompt =>
+      'Veuillez activer les services de localisation dans les paramètres de votre système pour détecter votre ville exacte.';
+
+  @override
+  String get openSettings => 'Ouvrir les Paramètres';
+
+  @override
+  String get timeForPrayer => 'Heure de la prière';
+
+  @override
+  String get stopAdhan => 'Arrêter l\'Adhan';
+
+  @override
+  String get adhanIsPlaying => 'L\'Adhan est en cours';
 }

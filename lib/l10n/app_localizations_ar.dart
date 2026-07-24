@@ -107,4 +107,65 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get system => 'النظام';
+
+  @override
+  String get muslimMode => 'الوضع الإسلامي';
+
+  @override
+  String get muslimModeSubtitle => 'إظهار أوقات الصلاة والأذان';
+
+  @override
+  String get location => 'الموقع';
+
+  @override
+  String get tapToDetect => 'انقر للتحديد';
+
+  @override
+  String get detect => 'تحديد';
+
+  @override
+  String get eyeCare => 'العناية بالعين';
+
+  @override
+  String get prayerTimes => 'أوقات الصلاة';
+
+  @override
+  String get fajr => 'الفجر';
+
+  @override
+  String get sunrise => 'الشروق';
+
+  @override
+  String get dhuhr => 'الظهر';
+
+  @override
+  String get asr => 'العصر';
+
+  @override
+  String get maghrib => 'المغرب';
+
+  @override
+  String get isha => 'العشاء';
+
+  @override
+  String get nextPrayer => 'القادمة';
+
+  @override
+  String get locationDisabled => 'الموقع معطل';
+
+  @override
+  String get enableLocationPrompt =>
+      'يرجى تمكين خدمات الموقع في إعدادات النظام لتحديد مدينتك بدقة.';
+
+  @override
+  String get openSettings => 'فتح الإعدادات';
+
+  @override
+  String get timeForPrayer => 'حان وقت الصلاة';
+
+  @override
+  String get stopAdhan => 'إيقاف الأذان';
+
+  @override
+  String get adhanIsPlaying => 'الأذان يرفع الآن';
 }
