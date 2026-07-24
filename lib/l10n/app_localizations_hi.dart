@@ -163,11 +163,11 @@ class AppLocalizationsHi extends AppLocalizations {
   String get openSettings => 'Open Settings';
 
   @override
-  String get timeForPrayer => 'Time for prayer';
+  String get timeForPrayer => 'प्रार्थना का समय';
 
   @override
-  String get stopAdhan => 'Stop Adhan';
+  String get stopAdhan => 'अज़ान रोकें';
 
   @override
-  String get adhanIsPlaying => 'Adhan is playing';
+  String get adhanIsPlaying => 'अज़ान बज रही है';
 }

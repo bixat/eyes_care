@@ -157,11 +157,11 @@ class AppLocalizationsZh extends AppLocalizations {
   String get openSettings => 'Open Settings';
 
   @override
-  String get timeForPrayer => 'Time for prayer';
+  String get timeForPrayer => '祈祷时间';
 
   @override
-  String get stopAdhan => 'Stop Adhan';
+  String get stopAdhan => '停止宣礼';
 
   @override
-  String get adhanIsPlaying => 'Adhan is playing';
+  String get adhanIsPlaying => '正在播放宣礼';
 }

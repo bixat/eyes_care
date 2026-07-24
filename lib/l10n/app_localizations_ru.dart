@@ -163,11 +163,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get openSettings => 'Open Settings';
 
   @override
-  String get timeForPrayer => 'Time for prayer';
+  String get timeForPrayer => 'Время молитвы';
 
   @override
-  String get stopAdhan => 'Stop Adhan';
+  String get stopAdhan => 'Остановить Азан';
 
   @override
-  String get adhanIsPlaying => 'Adhan is playing';
+  String get adhanIsPlaying => 'Азан звучит';
 }

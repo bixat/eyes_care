@@ -158,11 +158,11 @@ class AppLocalizationsJa extends AppLocalizations {
   String get openSettings => 'Open Settings';
 
   @override
-  String get timeForPrayer => 'Time for prayer';
+  String get timeForPrayer => '祈りの時間';
 
   @override
-  String get stopAdhan => 'Stop Adhan';
+  String get stopAdhan => 'アザーンを停止';
 
   @override
-  String get adhanIsPlaying => 'Adhan is playing';
+  String get adhanIsPlaying => 'アザーンが再生中です';
 }

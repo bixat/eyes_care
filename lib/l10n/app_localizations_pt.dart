@@ -161,11 +161,11 @@ class AppLocalizationsPt extends AppLocalizations {
   String get openSettings => 'Open Settings';
 
   @override
-  String get timeForPrayer => 'Time for prayer';
+  String get timeForPrayer => 'Hora da oração';
 
   @override
-  String get stopAdhan => 'Stop Adhan';
+  String get stopAdhan => 'Parar Adhan';
 
   @override
-  String get adhanIsPlaying => 'Adhan is playing';
+  String get adhanIsPlaying => 'Adhan está tocando';
 }

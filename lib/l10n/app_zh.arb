@@ -49,7 +49,7 @@
   "locationDisabled": "Location Disabled",
   "enableLocationPrompt": "Please enable location services in your system settings to detect your exact city.",
   "openSettings": "Open Settings",
-  "timeForPrayer": "Time for prayer",
-  "stopAdhan": "Stop Adhan",
-  "adhanIsPlaying": "Adhan is playing"
+  "timeForPrayer": "祈祷时间",
+  "stopAdhan": "停止宣礼",
+  "adhanIsPlaying": "正在播放宣礼"
 }
