@@ -164,4 +164,10 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get adhanIsPlaying => 'アザーンが再生中です';
+
+  @override
+  String get discoverIslam => 'イスラム教を発見する';
+
+  @override
+  String get discoverIslamSubtitle => 'イスラム教を理解するための簡単なガイド';
 }

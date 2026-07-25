@@ -7,6 +7,7 @@ import 'package:eyes_care/services/prayer_service.dart';
 import 'package:flutter/material.dart';
 import 'package:launch_at_startup/launch_at_startup.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends StatelessWidget {
   final int reminder;
@@ -76,6 +77,7 @@ class Settings extends StatelessWidget {
               builder: (context, _) {
                 final prayerService = PrayerService();
                 return Column(
+                  spacing: 16.0,
                   children: [
                     SwitcherSetting(
                       enabled: ValueNotifier(prayerService.isMuslimModeEnabled),
@@ -87,18 +89,102 @@ class Settings extends StatelessWidget {
                       },
                     ),
                     if (prayerService.isMuslimModeEnabled)
-                    _buildLocationCard(context, theme, prayerService),
-                ],
-              );
-            },
-          ),
+                      _buildLocationCard(context, theme, prayerService),
+                  ],
+                );
+              },
+            ),
+            _buildDiscoverIslamCard(context, theme),
         ],
         ),
       ),
     );
   }
 
-                  Widget _buildLocationCard(
+  Widget _buildDiscoverIslamCard(BuildContext context, ThemeData theme) {
+    final loc = AppLocalizations.of(context);
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: theme.colorScheme.outlineVariant, width: 1),
+      ),
+      child: InkWell(
+        onTap: () async {
+          final supportedLanguages = {'en', 'es', 'fr', 'de', 'zh', 'ja', 'ru', 'pt', 'hi', 'tr'};
+          final currentLang = localeNotifier.value.languageCode;
+          final lang = supportedLanguages.contains(currentLang) ? currentLang : 'en';
+          
+          final url = Uri.parse('https://guidetoislam.com/$lang');
+          if (await canLaunchUrl(url)) {
+            await launchUrl(url);
+          }
+        },
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      theme.colorScheme.tertiaryContainer,
+                      theme.colorScheme.tertiaryContainer.withAlpha(180),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  Icons.menu_book_rounded,
+                  color: theme.colorScheme.tertiary,
+                  size: 28,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      loc.discoverIslam,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: theme.colorScheme.onSurface,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      loc.discoverIslamSubtitle,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  Icons.open_in_new_rounded,
+                  color: theme.colorScheme.onSurfaceVariant,
+                  size: 16,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLocationCard(
     BuildContext context,
     ThemeData theme,
     PrayerService prayerService,

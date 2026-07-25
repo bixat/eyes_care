@@ -51,5 +51,7 @@
   "openSettings": "Ayarları Aç",
   "timeForPrayer": "Namaz vakti",
   "stopAdhan": "Ezanı Durdur",
-  "adhanIsPlaying": "Ezan okunuyor"
+  "adhanIsPlaying": "Ezan okunuyor",
+  "discoverIslam": "İslam'ı Keşfet",
+  "discoverIslamSubtitle": "İslam'ı anlamak için kısa bir rehber"
 }

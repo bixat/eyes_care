@@ -170,4 +170,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get adhanIsPlaying => 'L\'Adhan est en cours';
+
+  @override
+  String get discoverIslam => 'Découvrir l\'Islam';
+
+  @override
+  String get discoverIslamSubtitle => 'Un bref guide pour comprendre l\'Islam';
 }

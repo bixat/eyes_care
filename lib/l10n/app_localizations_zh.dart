@@ -163,4 +163,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get adhanIsPlaying => '正在播放宣礼';
+
+  @override
+  String get discoverIslam => '探索伊斯兰教';
+
+  @override
+  String get discoverIslamSubtitle => '了解伊斯兰教的简要指南';
 }

@@ -170,4 +170,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get adhanIsPlaying => 'Азан звучит';
+
+  @override
+  String get discoverIslam => 'Откройте для себя Ислам';
+
+  @override
+  String get discoverIslamSubtitle => 'Краткое руководство по пониманию Ислама';
 }

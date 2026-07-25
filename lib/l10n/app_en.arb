@@ -51,5 +51,13 @@
   "openSettings": "Open Settings",
   "timeForPrayer": "Time for prayer",
   "stopAdhan": "Stop Adhan",
-  "adhanIsPlaying": "Adhan is playing"
+  "adhanIsPlaying": "Adhan is playing",
+  "discoverIslam": "Discover Islam",
+  "discoverIslamSubtitle": "A brief guide to understand Islam",
+  "@discoverIslam": {
+    "description": "Title for the Discover Islam promotion card"
+  },
+  "@discoverIslamSubtitle": {
+    "description": "Subtitle for the Discover Islam promotion card"
+  }
 }

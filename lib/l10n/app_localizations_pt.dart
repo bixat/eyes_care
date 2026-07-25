@@ -168,4 +168,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get adhanIsPlaying => 'Adhan está tocando';
+
+  @override
+  String get discoverIslam => 'Descubra o Islã';
+
+  @override
+  String get discoverIslamSubtitle => 'Um breve guia para entender o Islã';
 }

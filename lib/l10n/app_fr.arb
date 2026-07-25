@@ -51,5 +51,7 @@
   "openSettings": "Ouvrir les paramètres",
   "timeForPrayer": "Heure de la prière",
   "stopAdhan": "Arrêter l'Adhan",
-  "adhanIsPlaying": "L'Adhan est en cours"
+  "adhanIsPlaying": "L'Adhan est en cours",
+  "discoverIslam": "Découvrir l'Islam",
+  "discoverIslamSubtitle": "Un bref guide pour comprendre l'Islam"
 }

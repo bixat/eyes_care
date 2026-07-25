@@ -170,4 +170,11 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get adhanIsPlaying => 'अज़ान बज रही है';
+
+  @override
+  String get discoverIslam => 'इस्लाम की खोज करें';
+
+  @override
+  String get discoverIslamSubtitle =>
+      'इस्लाम को समझने के लिए एक संक्षिप्त मार्गदर्शिका';
 }

@@ -170,4 +170,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhanIsPlaying => 'Adhan is playing';
+
+  @override
+  String get discoverIslam => 'Discover Islam';
+
+  @override
+  String get discoverIslamSubtitle => 'A brief guide to understand Islam';
 }

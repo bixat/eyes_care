@@ -51,5 +51,7 @@
   "openSettings": "設定を開く",
   "timeForPrayer": "祈りの時間",
   "stopAdhan": "アザーンを停止",
-  "adhanIsPlaying": "アザーンが再生中です"
+  "adhanIsPlaying": "アザーンが再生中です",
+  "discoverIslam": "イスラム教を発見する",
+  "discoverIslamSubtitle": "イスラム教を理解するための簡単なガイド"
 }

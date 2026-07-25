@@ -427,6 +427,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Adhan is playing'**
   String get adhanIsPlaying;
+
+  /// Title for the Discover Islam promotion card
+  ///
+  /// In en, this message translates to:
+  /// **'Discover Islam'**
+  String get discoverIslam;
+
+  /// Subtitle for the Discover Islam promotion card
+  ///
+  /// In en, this message translates to:
+  /// **'A brief guide to understand Islam'**
+  String get discoverIslamSubtitle;
 }
 
 class _AppLocalizationsDelegate

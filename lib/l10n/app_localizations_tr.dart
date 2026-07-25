@@ -171,4 +171,10 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get adhanIsPlaying => 'Ezan okunuyor';
+
+  @override
+  String get discoverIslam => 'İslam\'ı Keşfet';
+
+  @override
+  String get discoverIslamSubtitle => 'İslam\'ı anlamak için kısa bir rehber';
 }
