@@ -6,12 +6,23 @@ Taline is a desktop application built with Flutter, designed to help users maint
 ## Screenshots
 
 <div align="center">
-  <img src="screenshots/muslim_mode_1.png" alt="Muslim Mode Timer" width="400"/>
-  <img src="screenshots/muslim_mode_2.png" alt="Prayer Times" width="400"/>
+  <img src="screenshots/muslim_mode_1.png" alt="Muslim Mode Timer (Dark)" width="400"/>
+  <img src="screenshots/muslim_mode_light_1.png" alt="Muslim Mode Timer (Light)" width="400"/>
 </div>
 <div align="center">
-  <img src="screenshots/settings_1.png" alt="Settings" width="400"/>
+  <img src="screenshots/muslim_mode_2.png" alt="Prayer Times (Dark)" width="400"/>
+  <img src="screenshots/muslim_mode_light_2.png" alt="Prayer Times (Light)" width="400"/>
+</div>
+<div align="center">
+  <img src="screenshots/settings_1.png" alt="Settings (Dark)" width="400"/>
+  <img src="screenshots/settings_light_1.png" alt="Settings (Light)" width="400"/>
+</div>
+<div align="center">
   <img src="screenshots/settings_2.png" alt="Language Selection" width="400"/>
+</div>
+<div align="center">
+  <img src="screenshots/edit_rule_dark.png" alt="Edit Rule (Dark)" width="400"/>
+  <img src="screenshots/edit_rule_light.png" alt="Edit Rule (Light)" width="400"/>
 </div>
 
 ## Support
