@@ -64,6 +64,7 @@ Taline is a desktop application built with Flutter, designed to help users maint
 
 1. Launch the Taline app on your desktop.
 2. Start using the app, and it will notify you when it's time to take a break.
+3. **For Muslim Mode:** Enable Location Services when prompted so Taline can automatically detect your location for accurate prayer times.
 4. During each break, follow the 20-20-20 rule by looking at an object 20 feet away for 20 seconds.
 
 ## Contributing
