@@ -106,56 +106,55 @@ class AppLocalizationsJa extends AppLocalizations {
   String get system => 'システム';
 
   @override
-  String get muslimMode => 'Muslim Mode';
+  String get muslimMode => 'イスラムモード';
 
   @override
-  String get muslimModeSubtitle => 'Show prayer times and Adhan';
+  String get muslimModeSubtitle => '祈りの時間とアザーンを表示する';
 
   @override
-  String get location => 'Location';
+  String get location => '場所';
 
   @override
-  String get tapToDetect => 'Tap to detect';
+  String get tapToDetect => 'タップして検出';
 
   @override
-  String get detect => 'Detect';
+  String get detect => '検出';
 
   @override
-  String get eyeCare => 'Eye Care';
+  String get eyeCare => 'アイケア';
 
   @override
-  String get prayerTimes => 'Prayer Times';
+  String get prayerTimes => '祈りの時間';
 
   @override
-  String get fajr => 'Fajr';
+  String get fajr => 'ファジル';
 
   @override
-  String get sunrise => 'Sunrise';
+  String get sunrise => '日の出';
 
   @override
-  String get dhuhr => 'Dhuhr';
+  String get dhuhr => 'ズフル';
 
   @override
-  String get asr => 'Asr';
+  String get asr => 'アスル';
 
   @override
-  String get maghrib => 'Maghrib';
+  String get maghrib => 'マグリブ';
 
   @override
-  String get isha => 'Isha';
+  String get isha => 'イシャ';
 
   @override
-  String get nextPrayer => 'Next';
+  String get nextPrayer => '次';
 
   @override
-  String get locationDisabled => 'Location Disabled';
+  String get locationDisabled => '位置情報が無効です';
 
   @override
-  String get enableLocationPrompt =>
-      'Please enable location services in your system settings to detect your exact city.';
+  String get enableLocationPrompt => '正確な都市を検出するためにシステム設定で位置情報サービスを有効にしてください。';
 
   @override
-  String get openSettings => 'Open Settings';
+  String get openSettings => '設定を開く';
 
   @override
   String get timeForPrayer => '祈りの時間';

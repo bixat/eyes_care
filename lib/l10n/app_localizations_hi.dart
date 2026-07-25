@@ -111,56 +111,56 @@ class AppLocalizationsHi extends AppLocalizations {
   String get system => 'सिस्टम';
 
   @override
-  String get muslimMode => 'Muslim Mode';
+  String get muslimMode => 'मुस्लिम मोड';
 
   @override
-  String get muslimModeSubtitle => 'Show prayer times and Adhan';
+  String get muslimModeSubtitle => 'प्रार्थना का समय और अज़ान दिखाएं';
 
   @override
-  String get location => 'Location';
+  String get location => 'स्थान';
 
   @override
-  String get tapToDetect => 'Tap to detect';
+  String get tapToDetect => 'पता लगाने के लिए टैप करें';
 
   @override
-  String get detect => 'Detect';
+  String get detect => 'पता लगाएं';
 
   @override
-  String get eyeCare => 'Eye Care';
+  String get eyeCare => 'नेत्र देखभाल';
 
   @override
-  String get prayerTimes => 'Prayer Times';
+  String get prayerTimes => 'प्रार्थना का समय';
 
   @override
-  String get fajr => 'Fajr';
+  String get fajr => 'फ़ज्र';
 
   @override
-  String get sunrise => 'Sunrise';
+  String get sunrise => 'सूर्योदय';
 
   @override
-  String get dhuhr => 'Dhuhr';
+  String get dhuhr => 'ज़ुहर';
 
   @override
-  String get asr => 'Asr';
+  String get asr => 'अस्र';
 
   @override
-  String get maghrib => 'Maghrib';
+  String get maghrib => 'मग़रिब';
 
   @override
-  String get isha => 'Isha';
+  String get isha => 'इशा';
 
   @override
-  String get nextPrayer => 'Next';
+  String get nextPrayer => 'अगली';
 
   @override
-  String get locationDisabled => 'Location Disabled';
+  String get locationDisabled => 'स्थान अक्षम है';
 
   @override
   String get enableLocationPrompt =>
-      'Please enable location services in your system settings to detect your exact city.';
+      'कृपया अपने सटीक शहर का पता लगाने के लिए सिस्टम सेटिंग्स में स्थान सेवाएँ सक्षम करें।';
 
   @override
-  String get openSettings => 'Open Settings';
+  String get openSettings => 'सेटिंग्स खोलें';
 
   @override
   String get timeForPrayer => 'प्रार्थना का समय';

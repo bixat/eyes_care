@@ -105,56 +105,55 @@ class AppLocalizationsZh extends AppLocalizations {
   String get system => '系统';
 
   @override
-  String get muslimMode => 'Muslim Mode';
+  String get muslimMode => '穆斯林模式';
 
   @override
-  String get muslimModeSubtitle => 'Show prayer times and Adhan';
+  String get muslimModeSubtitle => '显示祈祷时间和宣礼';
 
   @override
-  String get location => 'Location';
+  String get location => '位置';
 
   @override
-  String get tapToDetect => 'Tap to detect';
+  String get tapToDetect => '点击检测';
 
   @override
-  String get detect => 'Detect';
+  String get detect => '检测';
 
   @override
-  String get eyeCare => 'Eye Care';
+  String get eyeCare => '眼部护理';
 
   @override
-  String get prayerTimes => 'Prayer Times';
+  String get prayerTimes => '祈祷时间';
 
   @override
-  String get fajr => 'Fajr';
+  String get fajr => '晨礼 (Fajr)';
 
   @override
-  String get sunrise => 'Sunrise';
+  String get sunrise => '日出';
 
   @override
-  String get dhuhr => 'Dhuhr';
+  String get dhuhr => '晌礼 (Dhuhr)';
 
   @override
-  String get asr => 'Asr';
+  String get asr => '晡礼 (Asr)';
 
   @override
-  String get maghrib => 'Maghrib';
+  String get maghrib => '昏礼 (Maghrib)';
 
   @override
-  String get isha => 'Isha';
+  String get isha => '宵礼 (Isha)';
 
   @override
-  String get nextPrayer => 'Next';
+  String get nextPrayer => '下一次';
 
   @override
-  String get locationDisabled => 'Location Disabled';
+  String get locationDisabled => '位置已禁用';
 
   @override
-  String get enableLocationPrompt =>
-      'Please enable location services in your system settings to detect your exact city.';
+  String get enableLocationPrompt => '请在系统设置中启用定位服务以检测您的准确城市。';
 
   @override
-  String get openSettings => 'Open Settings';
+  String get openSettings => '打开设置';
 
   @override
   String get timeForPrayer => '祈祷时间';

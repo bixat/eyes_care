@@ -110,31 +110,31 @@ class AppLocalizationsEs extends AppLocalizations {
   String get system => 'Sistema';
 
   @override
-  String get muslimMode => 'Muslim Mode';
+  String get muslimMode => 'Modo Musulmán';
 
   @override
-  String get muslimModeSubtitle => 'Show prayer times and Adhan';
+  String get muslimModeSubtitle => 'Mostrar horarios de oración y Adhan';
 
   @override
-  String get location => 'Location';
+  String get location => 'Ubicación';
 
   @override
-  String get tapToDetect => 'Tap to detect';
+  String get tapToDetect => 'Toca para detectar';
 
   @override
-  String get detect => 'Detect';
+  String get detect => 'Detectar';
 
   @override
-  String get eyeCare => 'Eye Care';
+  String get eyeCare => 'Cuidado de ojos';
 
   @override
-  String get prayerTimes => 'Prayer Times';
+  String get prayerTimes => 'Horarios de Oración';
 
   @override
   String get fajr => 'Fajr';
 
   @override
-  String get sunrise => 'Sunrise';
+  String get sunrise => 'Amanecer';
 
   @override
   String get dhuhr => 'Dhuhr';
@@ -149,17 +149,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get isha => 'Isha';
 
   @override
-  String get nextPrayer => 'Next';
+  String get nextPrayer => 'Próxima';
 
   @override
-  String get locationDisabled => 'Location Disabled';
+  String get locationDisabled => 'Ubicación desactivada';
 
   @override
   String get enableLocationPrompt =>
-      'Please enable location services in your system settings to detect your exact city.';
+      'Habilite los servicios de ubicación en la configuración del sistema para detectar su ciudad exacta.';
 
   @override
-  String get openSettings => 'Open Settings';
+  String get openSettings => 'Abrir configuración';
 
   @override
   String get timeForPrayer => 'Hora de rezar';

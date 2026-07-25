@@ -112,56 +112,56 @@ class AppLocalizationsTr extends AppLocalizations {
   String get system => 'Sistem';
 
   @override
-  String get muslimMode => 'Muslim Mode';
+  String get muslimMode => 'Müslüman Modu';
 
   @override
-  String get muslimModeSubtitle => 'Show prayer times and Adhan';
+  String get muslimModeSubtitle => 'Namaz vakitlerini ve Ezan\'ı göster';
 
   @override
-  String get location => 'Location';
+  String get location => 'Konum';
 
   @override
-  String get tapToDetect => 'Tap to detect';
+  String get tapToDetect => 'Bulmak için dokun';
 
   @override
-  String get detect => 'Detect';
+  String get detect => 'Bul';
 
   @override
-  String get eyeCare => 'Eye Care';
+  String get eyeCare => 'Göz Bakımı';
 
   @override
-  String get prayerTimes => 'Prayer Times';
+  String get prayerTimes => 'Namaz Vakitleri';
 
   @override
-  String get fajr => 'Fajr';
+  String get fajr => 'İmsak';
 
   @override
-  String get sunrise => 'Sunrise';
+  String get sunrise => 'Güneş';
 
   @override
-  String get dhuhr => 'Dhuhr';
+  String get dhuhr => 'Öğle';
 
   @override
-  String get asr => 'Asr';
+  String get asr => 'İkindi';
 
   @override
-  String get maghrib => 'Maghrib';
+  String get maghrib => 'Akşam';
 
   @override
-  String get isha => 'Isha';
+  String get isha => 'Yatsı';
 
   @override
-  String get nextPrayer => 'Next';
+  String get nextPrayer => 'Sıradaki';
 
   @override
-  String get locationDisabled => 'Location Disabled';
+  String get locationDisabled => 'Konum Kapalı';
 
   @override
   String get enableLocationPrompt =>
-      'Please enable location services in your system settings to detect your exact city.';
+      'Şehrinizi tespit etmek için lütfen sistem ayarlarından konum servislerini etkinleştirin.';
 
   @override
-  String get openSettings => 'Open Settings';
+  String get openSettings => 'Ayarları Aç';
 
   @override
   String get timeForPrayer => 'Namaz vakti';

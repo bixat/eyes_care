@@ -120,13 +120,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get location => 'Emplacement';
 
   @override
-  String get tapToDetect => 'Appuyer pour détecter';
+  String get tapToDetect => 'Appuyez pour détecter';
 
   @override
   String get detect => 'Détecter';
 
   @override
-  String get eyeCare => 'Soins des Yeux';
+  String get eyeCare => 'Soins des yeux';
 
   @override
   String get prayerTimes => 'Heures de Prière';
@@ -153,14 +153,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get nextPrayer => 'Prochaine';
 
   @override
-  String get locationDisabled => 'Localisation Désactivée';
+  String get locationDisabled => 'Emplacement désactivé';
 
   @override
   String get enableLocationPrompt =>
-      'Veuillez activer les services de localisation dans les paramètres de votre système pour détecter votre ville exacte.';
+      'Veuillez activer les services de localisation dans les paramètres du système pour détecter votre ville exacte.';
 
   @override
-  String get openSettings => 'Ouvrir les Paramètres';
+  String get openSettings => 'Ouvrir les paramètres';
 
   @override
   String get timeForPrayer => 'Heure de la prière';

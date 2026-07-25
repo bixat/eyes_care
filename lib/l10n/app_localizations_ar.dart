@@ -109,10 +109,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get system => 'النظام';
 
   @override
-  String get muslimMode => 'الوضع الإسلامي';
+  String get muslimMode => 'وضع المسلم';
 
   @override
-  String get muslimModeSubtitle => 'إظهار أوقات الصلاة والأذان';
+  String get muslimModeSubtitle => 'عرض أوقات الصلاة والأذان';
 
   @override
   String get location => 'الموقع';
@@ -155,7 +155,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get enableLocationPrompt =>
-      'يرجى تمكين خدمات الموقع في إعدادات النظام لتحديد مدينتك بدقة.';
+      'يرجى تمكين خدمات الموقع في إعدادات النظام لتحديد مدينتك الدقيقة.';
 
   @override
   String get openSettings => 'فتح الإعدادات';

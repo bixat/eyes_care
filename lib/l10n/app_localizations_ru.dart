@@ -111,56 +111,56 @@ class AppLocalizationsRu extends AppLocalizations {
   String get system => 'Системная';
 
   @override
-  String get muslimMode => 'Muslim Mode';
+  String get muslimMode => 'Мусульманский режим';
 
   @override
-  String get muslimModeSubtitle => 'Show prayer times and Adhan';
+  String get muslimModeSubtitle => 'Показывать время молитв и азан';
 
   @override
-  String get location => 'Location';
+  String get location => 'Локация';
 
   @override
-  String get tapToDetect => 'Tap to detect';
+  String get tapToDetect => 'Нажмите, чтобы определить';
 
   @override
-  String get detect => 'Detect';
+  String get detect => 'Определить';
 
   @override
-  String get eyeCare => 'Eye Care';
+  String get eyeCare => 'Забота о глазах';
 
   @override
-  String get prayerTimes => 'Prayer Times';
+  String get prayerTimes => 'Время молитв';
 
   @override
-  String get fajr => 'Fajr';
+  String get fajr => 'Фаджр';
 
   @override
-  String get sunrise => 'Sunrise';
+  String get sunrise => 'Восход';
 
   @override
-  String get dhuhr => 'Dhuhr';
+  String get dhuhr => 'Зухр';
 
   @override
-  String get asr => 'Asr';
+  String get asr => 'Аср';
 
   @override
-  String get maghrib => 'Maghrib';
+  String get maghrib => 'Магриб';
 
   @override
-  String get isha => 'Isha';
+  String get isha => 'Иша';
 
   @override
-  String get nextPrayer => 'Next';
+  String get nextPrayer => 'Следующая';
 
   @override
-  String get locationDisabled => 'Location Disabled';
+  String get locationDisabled => 'Локация отключена';
 
   @override
   String get enableLocationPrompt =>
-      'Please enable location services in your system settings to detect your exact city.';
+      'Пожалуйста, включите службы геолокации в настройках системы, чтобы определить ваш город.';
 
   @override
-  String get openSettings => 'Open Settings';
+  String get openSettings => 'Открыть настройки';
 
   @override
   String get timeForPrayer => 'Время молитвы';
