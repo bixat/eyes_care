@@ -174,4 +174,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get discoverIslamSubtitle => 'دليل موجز لفهم الإسلام';
+
+  @override
+  String get pastPrayer => 'منذ';
 }

@@ -59,5 +59,6 @@
   },
   "@discoverIslamSubtitle": {
     "description": "Subtitle for the Discover Islam promotion card"
-  }
+  },
+  "pastPrayer": "Past"
 }

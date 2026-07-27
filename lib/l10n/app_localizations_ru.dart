@@ -176,4 +176,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get discoverIslamSubtitle => 'Краткое руководство по пониманию Ислама';
+
+  @override
+  String get pastPrayer => 'Прошло';
 }

@@ -169,4 +169,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get discoverIslamSubtitle => '了解伊斯兰教的简要指南';
+
+  @override
+  String get pastPrayer => '已过';
 }

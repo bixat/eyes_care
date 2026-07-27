@@ -99,6 +99,7 @@ class PrayerTable extends StatelessWidget {
                           ? NextPrayerCountdown(
                               nextPrayerTime: prayerService.nextPrayerTime ?? (prayer['time'] as DateTime),
                               nextPrayerText: loc.nextPrayer,
+                              pastPrayerText: loc.pastPrayer,
                               style: TextStyle(
                                 color: theme.colorScheme.onPrimaryContainer,
                                 fontWeight: FontWeight.bold,
@@ -144,12 +145,14 @@ class PrayerTable extends StatelessWidget {
 class NextPrayerCountdown extends StatefulWidget {
   final DateTime nextPrayerTime;
   final String nextPrayerText;
+  final String pastPrayerText;
   final TextStyle style;
 
   const NextPrayerCountdown({
     super.key,
     required this.nextPrayerTime,
     required this.nextPrayerText,
+    required this.pastPrayerText,
     required this.style,
   });
 
@@ -187,7 +190,9 @@ class _NextPrayerCountdownState extends State<NextPrayerCountdown> {
         final remaining = widget.nextPrayerTime.difference(DateTime.now());
         final formatted = _formatDuration(remaining);
         return Text(
-          '${widget.nextPrayerText} $formatted',
+          remaining.isNegative 
+              ? '${widget.pastPrayerText} $formatted' 
+              : '${widget.nextPrayerText} $formatted',
           style: widget.style,
         );
       },

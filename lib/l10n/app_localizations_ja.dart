@@ -170,4 +170,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get discoverIslamSubtitle => 'イスラム教を理解するための簡単なガイド';
+
+  @override
+  String get pastPrayer => '経過';
 }

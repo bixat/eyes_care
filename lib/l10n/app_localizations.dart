@@ -439,6 +439,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A brief guide to understand Islam'**
   String get discoverIslamSubtitle;
+
+  /// No description provided for @pastPrayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get pastPrayer;
 }
 
 class _AppLocalizationsDelegate
