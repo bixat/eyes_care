@@ -33,8 +33,12 @@ class PrayerTable extends StatelessWidget {
         
         final displayNextPrayer = nextPrayer == Prayer.none ? Prayer.fajr : nextPrayer;
         
+        final DateTime fajrTime = (nextPrayer == Prayer.none && prayerService.nextPrayerTime != null)
+            ? prayerService.nextPrayerTime!
+            : prayerTimes.fajr;
+        
         final prayers = [
-          {'name': loc.fajr, 'time': prayerTimes.fajr, 'enum': Prayer.fajr},
+          {'name': loc.fajr, 'time': fajrTime, 'enum': Prayer.fajr},
           {'name': loc.sunrise, 'time': prayerTimes.sunrise, 'enum': Prayer.sunrise},
           {'name': loc.dhuhr, 'time': prayerTimes.dhuhr, 'enum': Prayer.dhuhr},
           {'name': loc.asr, 'time': prayerTimes.asr, 'enum': Prayer.asr},

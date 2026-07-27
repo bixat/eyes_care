@@ -27,6 +27,7 @@ class PrayerService extends ChangeNotifier {
 
   final AudioPlayer _audioPlayer = AudioPlayer();
   Timer? _timer;
+  Timer? _uiTimer;
 
   // Callback to trigger UI actions like blocking the screen
   Function(bool isPlaying)? onAdhanStateChanged;
@@ -157,29 +158,58 @@ class PrayerService extends ChangeNotifier {
 
   void _scheduleNextPrayer() {
     _timer?.cancel();
+    _uiTimer?.cancel();
     if (prayerTimes == null) return;
     
     final now = DateTime.now();
-    nextPrayer = prayerTimes!.nextPrayer();
+    final actualNextPrayer = prayerTimes!.nextPrayer();
+    DateTime? actualNextPrayerTime;
     
-    if (nextPrayer == Prayer.none) {
+    if (actualNextPrayer == Prayer.none) {
       // All prayers for today are done, schedule for tomorrow's Fajr by recalculating at midnight
       final tomorrow = DateTime(now.year, now.month, now.day + 1);
       final diff = tomorrow.difference(now);
       _timer = Timer(diff, _calculatePrayerTimes);
-      nextPrayerTime = null;
-      return;
+      
+      final tomorrowDate = DateComponents.from(tomorrow);
+      final params = CalculationMethod.muslim_world_league.getParameters();
+      params.madhab = Madhab.shafi;
+      final tomorrowPrayerTimes = PrayerTimes(Coordinates(latitude!, longitude!), tomorrowDate, params);
+      actualNextPrayerTime = tomorrowPrayerTimes.fajr;
+    } else {
+      actualNextPrayerTime = prayerTimes!.timeForPrayer(actualNextPrayer);
+      if (actualNextPrayerTime != null) {
+        final durationUntilNext = actualNextPrayerTime.difference(now);
+        if (durationUntilNext.isNegative) {
+           _calculatePrayerTimes();
+           return;
+        }
+        _timer = Timer(durationUntilNext, _onPrayerTime);
+      }
     }
     
-    nextPrayerTime = prayerTimes!.timeForPrayer(nextPrayer!);
-    if (nextPrayerTime != null) {
-      final durationUntilNext = nextPrayerTime!.difference(now);
-      if (durationUntilNext.isNegative) {
-         _calculatePrayerTimes();
-         return;
-      }
-      _timer = Timer(durationUntilNext, _onPrayerTime);
+    // Determine the prayer to display on the UI
+    final current = prayerTimes!.currentPrayer();
+    final currentTime = current != Prayer.none ? prayerTimes!.timeForPrayer(current) : null;
+    
+    if (currentTime != null && 
+        now.difference(currentTime) < const Duration(minutes: 20) && 
+        !now.difference(currentTime).isNegative) {
+      // Show the current prayer for up to 20 minutes after its time
+      nextPrayer = current;
+      nextPrayerTime = currentTime;
+      
+      final timeToSwitch = const Duration(minutes: 20) - now.difference(currentTime);
+      _uiTimer = Timer(timeToSwitch, () {
+        nextPrayer = actualNextPrayer;
+        nextPrayerTime = actualNextPrayerTime;
+        notifyListeners();
+      });
+    } else {
+      nextPrayer = actualNextPrayer;
+      nextPrayerTime = actualNextPrayerTime;
     }
+    
     notifyListeners();
   }
 
