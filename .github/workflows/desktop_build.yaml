@@ -20,16 +20,14 @@ jobs:
         uses: dart-lang/setup-dart@v1
       - name: Get Project Version
         id: version
-        run: |
-          dart workflows_utils/get_project_version.dart
-          echo "version_name=${version_name}" >> $GITHUB_OUTPUT
+        run: dart workflows_utils/get_project_version.dart
       - name: Draft release with release notes
         id: create_release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN || secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.version_name }}
+          tag_name: ${{ steps.version.outputs.version_name }}
           prerelease: false
           generate_release_notes: true
 
