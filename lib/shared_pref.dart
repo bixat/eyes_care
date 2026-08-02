@@ -7,6 +7,11 @@ class PreferenceService {
   static const seconds = "seconds";
   static const themeModeKey = "theme_mode";
   static const languageKey = "language";
+  static const muslimModeEnabledKey = "muslim_mode_enabled";
+  static const latitudeKey = "latitude";
+  static const longitudeKey = "longitude";
+  static const cityKey = "city";
+  static const countryKey = "country";
 
   static Future<void> setThemeMode(String mode) async {
     final prefs = await instance;
@@ -39,6 +44,26 @@ class PreferenceService {
   static Future<bool?> getBool(String key) async {
     final prefs = await instance;
     return prefs.getBool(key);
+  }
+
+  static Future<void> setString(String key, String value) async {
+    final prefs = await instance;
+    await prefs.setString(key, value);
+  }
+
+  static Future<String?> getString(String key) async {
+    final prefs = await instance;
+    return prefs.getString(key);
+  }
+
+  static Future<void> setDouble(String key, double value) async {
+    final prefs = await instance;
+    await prefs.setDouble(key, value);
+  }
+
+  static Future<double?> getDouble(String key) async {
+    final prefs = await instance;
+    return prefs.getDouble(key);
   }
 
   static Future<void> setDuration(int min, int sec) async {

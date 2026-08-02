@@ -307,6 +307,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'System'**
   String get system;
+
+  /// No description provided for @muslimMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Muslim Mode'**
+  String get muslimMode;
+
+  /// No description provided for @muslimModeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show prayer times and Adhan'**
+  String get muslimModeSubtitle;
+
+  /// No description provided for @location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get location;
+
+  /// No description provided for @tapToDetect.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to detect'**
+  String get tapToDetect;
+
+  /// No description provided for @detect.
+  ///
+  /// In en, this message translates to:
+  /// **'Detect'**
+  String get detect;
+
+  /// No description provided for @eyeCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Eye Care'**
+  String get eyeCare;
+
+  /// No description provided for @prayerTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer Times'**
+  String get prayerTimes;
+
+  /// No description provided for @fajr.
+  ///
+  /// In en, this message translates to:
+  /// **'Fajr'**
+  String get fajr;
+
+  /// No description provided for @sunrise.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise'**
+  String get sunrise;
+
+  /// No description provided for @dhuhr.
+  ///
+  /// In en, this message translates to:
+  /// **'Dhuhr'**
+  String get dhuhr;
+
+  /// No description provided for @asr.
+  ///
+  /// In en, this message translates to:
+  /// **'Asr'**
+  String get asr;
+
+  /// No description provided for @maghrib.
+  ///
+  /// In en, this message translates to:
+  /// **'Maghrib'**
+  String get maghrib;
+
+  /// No description provided for @isha.
+  ///
+  /// In en, this message translates to:
+  /// **'Isha'**
+  String get isha;
+
+  /// No description provided for @nextPrayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get nextPrayer;
+
+  /// No description provided for @locationDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Location Disabled'**
+  String get locationDisabled;
+
+  /// No description provided for @enableLocationPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enable location services in your system settings to detect your exact city.'**
+  String get enableLocationPrompt;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get openSettings;
+
+  /// No description provided for @timeForPrayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Time for prayer'**
+  String get timeForPrayer;
+
+  /// No description provided for @stopAdhan.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop Adhan'**
+  String get stopAdhan;
+
+  /// No description provided for @adhanIsPlaying.
+  ///
+  /// In en, this message translates to:
+  /// **'Adhan is playing'**
+  String get adhanIsPlaying;
+
+  /// Title for the Discover Islam promotion card
+  ///
+  /// In en, this message translates to:
+  /// **'Discover Islam'**
+  String get discoverIslam;
+
+  /// Subtitle for the Discover Islam promotion card
+  ///
+  /// In en, this message translates to:
+  /// **'A brief guide to understand Islam'**
+  String get discoverIslamSubtitle;
+
+  /// No description provided for @pastPrayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get pastPrayer;
 }
 
 class _AppLocalizationsDelegate

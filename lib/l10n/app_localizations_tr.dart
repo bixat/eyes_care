@@ -110,4 +110,74 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get system => 'Sistem';
+
+  @override
+  String get muslimMode => 'Müslüman Modu';
+
+  @override
+  String get muslimModeSubtitle => 'Namaz vakitlerini ve Ezan\'ı göster';
+
+  @override
+  String get location => 'Konum';
+
+  @override
+  String get tapToDetect => 'Bulmak için dokun';
+
+  @override
+  String get detect => 'Bul';
+
+  @override
+  String get eyeCare => 'Göz Bakımı';
+
+  @override
+  String get prayerTimes => 'Namaz Vakitleri';
+
+  @override
+  String get fajr => 'İmsak';
+
+  @override
+  String get sunrise => 'Güneş';
+
+  @override
+  String get dhuhr => 'Öğle';
+
+  @override
+  String get asr => 'İkindi';
+
+  @override
+  String get maghrib => 'Akşam';
+
+  @override
+  String get isha => 'Yatsı';
+
+  @override
+  String get nextPrayer => 'Sıradaki';
+
+  @override
+  String get locationDisabled => 'Konum Kapalı';
+
+  @override
+  String get enableLocationPrompt =>
+      'Şehrinizi tespit etmek için lütfen sistem ayarlarından konum servislerini etkinleştirin.';
+
+  @override
+  String get openSettings => 'Ayarları Aç';
+
+  @override
+  String get timeForPrayer => 'Namaz vakti';
+
+  @override
+  String get stopAdhan => 'Ezanı Durdur';
+
+  @override
+  String get adhanIsPlaying => 'Ezan okunuyor';
+
+  @override
+  String get discoverIslam => 'İslam\'ı Keşfet';
+
+  @override
+  String get discoverIslamSubtitle => 'İslam\'ı anlamak için kısa bir rehber';
+
+  @override
+  String get pastPrayer => 'Geçen';
 }

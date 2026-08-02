@@ -6,12 +6,27 @@ Taline is a desktop application built with Flutter, designed to help users maint
 ## Screenshots
 
 <div align="center">
-  <img src="screenshots/light.png" alt="Light Theme Screenshot" width="400"/>
-  <img src="screenshots/dark.png" alt="Dark Theme Screenshot" width="400"/>
+  <img src="screenshots/muslim_mode_1.png" alt="Muslim Mode Timer (Dark)" width="400"/>
+  <img src="screenshots/muslim_mode_light_1.png" alt="Muslim Mode Timer (Light)" width="400"/>
+</div>
+<div align="center">
+  <img src="screenshots/muslim_mode_2.png" alt="Prayer Times (Dark)" width="400"/>
+  <img src="screenshots/muslim_mode_light_2.png" alt="Prayer Times (Light)" width="400"/>
+</div>
+<div align="center">
+  <img src="screenshots/settings_1.png" alt="Settings (Dark)" width="400"/>
+  <img src="screenshots/settings_light_1.png" alt="Settings (Light)" width="400"/>
+</div>
+<div align="center">
+  <img src="screenshots/settings_2.png" alt="Language Selection" width="400"/>
+</div>
+<div align="center">
+  <img src="screenshots/edit_rule_dark.png" alt="Edit Rule (Dark)" width="400"/>
+  <img src="screenshots/edit_rule_light.png" alt="Edit Rule (Light)" width="400"/>
 </div>
 
 ## Support
-<a href="https://github.com/bixat/eyes_care/releases/latest/download/TalinemacOS.dmg"><img src="https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0" height=25></a><a href="https://github.com/bixat/eyes_care/releases/latest/download/TalineWindows.zip"><img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" height=25></a><a href="https://github.com/bixat/eyes_care/releases/latest/download/TalineLinux.tar.gz"><img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" height=25></a>
+<a href="https://github.com/bixat/taline/releases/latest/download/TalinemacOS.dmg"><img src="https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0" height=25></a><a href="https://github.com/bixat/taline/releases/latest/download/TalineWindows.zip"><img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" height=25></a><a href="https://github.com/bixat/taline/releases/latest/download/TalineLinux.tar.gz"><img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" height=25></a>
 
 
 
@@ -29,6 +44,7 @@ Taline is a desktop application built with Flutter, designed to help users maint
 - **Customizable Reminder:** Set personalized reminders to take breaks and rest your eyes based on your preferences, with options to follow the 20-20-20 rule or a custom time interval.
 - **Countdown Timer:** Monitor the time remaining until your next scheduled eye break, with a fully adjustable countdown timer feature to suit your needs.
 - **Notifications:** Get customizable desktop notifications or alerts to remind you when it's time for your next eye break with options for forcing take break mode.
+- **Muslim Mode:** A dedicated mode for Muslim users that displays accurate prayer times, plays Azan notifications, and helps balance screen time with prayer schedules. Includes access to educational resources about Islam.
 - **Multi-language Support:** Available in multiple languages including English, Arabic, Spanish, French, German, Portuguese, Russian, Chinese, Japanese, Hindi, and Turkish.
 - **Startup at Login:** Control whether Taline launches automatically when you log in to your computer.
 
@@ -39,8 +55,8 @@ Taline is a desktop application built with Flutter, designed to help users maint
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/bixat/eyes_care.git`
-2. Navigate to the project directory: `cd eyes_care`
+1. Clone the repository: `git clone https://github.com/bixat/taline.git`
+2. Navigate to the project directory: `cd taline`
 3. Install the dependencies: `flutter pub get`
 4. Run the app: `flutter run`
 
@@ -48,6 +64,7 @@ Taline is a desktop application built with Flutter, designed to help users maint
 
 1. Launch the Taline app on your desktop.
 2. Start using the app, and it will notify you when it's time to take a break.
+3. **For Muslim Mode:** Enable Location Services when prompted so Taline can automatically detect your location for accurate prayer times.
 4. During each break, follow the 20-20-20 rule by looking at an object 20 feet away for 20 seconds.
 
 ## Contributing
@@ -75,6 +92,6 @@ Special thanks to these amazing projects from [LeanFlutter](https://github.com/l
 
 ## Support
 
-If you encounter any issues or have any questions or suggestions, please [open an issue](https://github.com/bixat/eyes_care/issues) on the GitHub repository.
+If you encounter any issues or have any questions or suggestions, please [open an issue](https://github.com/bixat/taline/issues) on the GitHub repository.
 
 ---

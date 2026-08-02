@@ -109,4 +109,74 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get system => 'Системная';
+
+  @override
+  String get muslimMode => 'Мусульманский режим';
+
+  @override
+  String get muslimModeSubtitle => 'Показывать время молитв и азан';
+
+  @override
+  String get location => 'Локация';
+
+  @override
+  String get tapToDetect => 'Нажмите, чтобы определить';
+
+  @override
+  String get detect => 'Определить';
+
+  @override
+  String get eyeCare => 'Забота о глазах';
+
+  @override
+  String get prayerTimes => 'Время молитв';
+
+  @override
+  String get fajr => 'Фаджр';
+
+  @override
+  String get sunrise => 'Восход';
+
+  @override
+  String get dhuhr => 'Зухр';
+
+  @override
+  String get asr => 'Аср';
+
+  @override
+  String get maghrib => 'Магриб';
+
+  @override
+  String get isha => 'Иша';
+
+  @override
+  String get nextPrayer => 'Следующая';
+
+  @override
+  String get locationDisabled => 'Локация отключена';
+
+  @override
+  String get enableLocationPrompt =>
+      'Пожалуйста, включите службы геолокации в настройках системы, чтобы определить ваш город.';
+
+  @override
+  String get openSettings => 'Открыть настройки';
+
+  @override
+  String get timeForPrayer => 'Время молитвы';
+
+  @override
+  String get stopAdhan => 'Остановить Азан';
+
+  @override
+  String get adhanIsPlaying => 'Азан звучит';
+
+  @override
+  String get discoverIslam => 'Откройте для себя Ислам';
+
+  @override
+  String get discoverIslamSubtitle => 'Краткое руководство по пониманию Ислама';
+
+  @override
+  String get pastPrayer => 'Прошло';
 }

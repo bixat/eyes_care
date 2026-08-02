@@ -108,4 +108,74 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get system => 'Sistema';
+
+  @override
+  String get muslimMode => 'Modo Musulmán';
+
+  @override
+  String get muslimModeSubtitle => 'Mostrar horarios de oración y Adhan';
+
+  @override
+  String get location => 'Ubicación';
+
+  @override
+  String get tapToDetect => 'Toca para detectar';
+
+  @override
+  String get detect => 'Detectar';
+
+  @override
+  String get eyeCare => 'Cuidado de ojos';
+
+  @override
+  String get prayerTimes => 'Horarios de Oración';
+
+  @override
+  String get fajr => 'Fajr';
+
+  @override
+  String get sunrise => 'Amanecer';
+
+  @override
+  String get dhuhr => 'Dhuhr';
+
+  @override
+  String get asr => 'Asr';
+
+  @override
+  String get maghrib => 'Maghrib';
+
+  @override
+  String get isha => 'Isha';
+
+  @override
+  String get nextPrayer => 'Próxima';
+
+  @override
+  String get locationDisabled => 'Ubicación desactivada';
+
+  @override
+  String get enableLocationPrompt =>
+      'Habilite los servicios de ubicación en la configuración del sistema para detectar su ciudad exacta.';
+
+  @override
+  String get openSettings => 'Abrir configuración';
+
+  @override
+  String get timeForPrayer => 'Hora de rezar';
+
+  @override
+  String get stopAdhan => 'Detener Adhan';
+
+  @override
+  String get adhanIsPlaying => 'Adhan se está reproduciendo';
+
+  @override
+  String get discoverIslam => 'Descubre el Islam';
+
+  @override
+  String get discoverIslamSubtitle => 'Una breve guía para entender el Islam';
+
+  @override
+  String get pastPrayer => 'Pasada';
 }

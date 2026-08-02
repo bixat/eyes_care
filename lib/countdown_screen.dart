@@ -2,6 +2,8 @@ import 'package:eyes_care/l10n/app_localizations.dart';
 import 'package:eyes_care/main.dart';
 import 'package:eyes_care/widgets/settings.dart';
 import 'package:eyes_care/widgets/work_break_info.dart';
+import 'package:eyes_care/services/prayer_service.dart';
+import 'package:eyes_care/widgets/prayer_table.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rocket_timer/rocket_timer.dart';
@@ -59,6 +61,13 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
     );
 
     setupTimer();
+    
+    PrayerService().onAdhanStateChanged = (isPlaying) async {
+      if (forceModeEnabled.value) {
+        await handleWindowState();
+      }
+    };
+    
     super.initState();
   }
 
@@ -112,7 +121,7 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
   }
 
   Future<void> handleWindowState() async {
-    if (inBreak) {
+    if (inBreak || PrayerService().isAdhanPlaying) {
       await windowManager.show();
       await windowManager.focus();
       await windowManager.setFullScreen(true);
@@ -219,49 +228,175 @@ class CountdownScreenState extends State<CountdownScreen> with WindowListener {
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
-
-                // Timer Section
-                if (_timer != null)
-                  Column(
-                    children: [
-                      RuleTimer(timer: _timer!, inBreak: inBreak),
-                      WorkBreakInfo(reminder: reminder, breakTime: breakTime),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                const SizedBox(height: 16),
+                
+                // Tabs
+                ListenableBuilder(
+                  listenable: PrayerService(),
+                  builder: (context, _) {
+                    final prayerService = PrayerService();
+                    final isMuslimMode = prayerService.isMuslimModeEnabled;
+                    
+                    return Expanded(
+                      child: Column(
                         children: [
-                          AnimatedBuilder(
-                            animation: _timer!,
-                            builder: (context, _) {
-                              return IconButton(
-                                icon: Icon(
-                                  _timer!.status == TimerStatus.pause
-                                      ? Icons.play_arrow
-                                      : Icons.pause,
+                          if (prayerService.isAdhanPlaying)
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 16),
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              decoration: BoxDecoration(
+                                color: theme.colorScheme.primaryContainer,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.volume_up, color: theme.colorScheme.onPrimaryContainer),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Text(
+                                      loc.adhanIsPlaying, 
+                                      style: TextStyle(
+                                        color: theme.colorScheme.onPrimaryContainer,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => prayerService.stopAdhan(),
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: theme.colorScheme.onErrorContainer,
+                                      backgroundColor: theme.colorScheme.errorContainer,
+                                    ),
+                                    child: Text(loc.stopAdhan),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          if (!isMuslimMode)
+                            Expanded(
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    const SizedBox(height: 24),
+                                    if (_timer != null)
+                                      Column(
+                                        children: [
+                                          RuleTimer(timer: _timer!, inBreak: inBreak),
+                                          WorkBreakInfo(reminder: reminder, breakTime: breakTime),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              AnimatedBuilder(
+                                                animation: _timer!,
+                                                builder: (context, _) {
+                                                  return IconButton(
+                                                    icon: Icon(
+                                                      _timer!.status == TimerStatus.pause
+                                                          ? Icons.play_arrow
+                                                          : Icons.pause,
+                                                    ),
+                                                    onPressed: () {
+                                                      if (_timer!.status == TimerStatus.pause) {
+                                                        _timer!.start();
+                                                      } else {
+                                                        _timer!.pause();
+                                                      }
+                                                    },
+                                                  );
+                                                },
+                                              ),
+                                              IconButton(
+                                                onPressed: _restartTimer,
+                                                icon: const Icon(Icons.restart_alt),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    const SizedBox(height: 32),
+                                    const RuleText(),
+                                  ],
                                 ),
-                                onPressed: () {
-                                  if (_timer!.status == TimerStatus.pause) {
-                                    _timer!.start();
-                                  } else {
-                                    _timer!.pause();
-                                  }
-                                },
-                              );
-                            },
-                          ),
-                          IconButton(
-                            onPressed: _restartTimer,
-                            icon: const Icon(Icons.restart_alt),
-                          ),
+                              ),
+                            )
+                          else
+                            Expanded(
+                              child: DefaultTabController(
+                                length: 2,
+                                child: Column(
+                                  children: [
+                                    TabBar(
+                                      tabs: [
+                                        Tab(icon: const Icon(Icons.timer), text: loc.eyeCare),
+                                        Tab(icon: const Icon(Icons.mosque), text: loc.muslimMode),
+                                      ],
+                                      labelColor: theme.colorScheme.primary,
+                                      unselectedLabelColor: theme.colorScheme.onSurfaceVariant,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Expanded(
+                                      child: TabBarView(
+                                        children: [
+                                          // Tab 1: Eye Care
+                                          SingleChildScrollView(
+                                            child: Column(
+                                              children: [
+                                                const SizedBox(height: 16),
+                                                if (_timer != null)
+                                                  Column(
+                                                    children: [
+                                                      RuleTimer(timer: _timer!, inBreak: inBreak),
+                                                      WorkBreakInfo(reminder: reminder, breakTime: breakTime),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          AnimatedBuilder(
+                                                            animation: _timer!,
+                                                            builder: (context, _) {
+                                                              return IconButton(
+                                                                icon: Icon(
+                                                                  _timer!.status == TimerStatus.pause
+                                                                      ? Icons.play_arrow
+                                                                      : Icons.pause,
+                                                                ),
+                                                                onPressed: () {
+                                                                  if (_timer!.status == TimerStatus.pause) {
+                                                                    _timer!.start();
+                                                                  } else {
+                                                                    _timer!.pause();
+                                                                  }
+                                                                },
+                                                              );
+                                                            },
+                                                          ),
+                                                          IconButton(
+                                                            onPressed: _restartTimer,
+                                                            icon: const Icon(Icons.restart_alt),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                const SizedBox(height: 16),
+                                                const RuleText(),
+                                                const SizedBox(height: 16),
+                                              ],
+                                            ),
+                                          ),
+                                          // Tab 2: Prayer Table
+                                          const PrayerTable(),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                         ],
                       ),
-                    ],
-                  ),
-                const SizedBox(height: 32),
-
-                // Rule Text Card
-                const RuleText(),
-                const Spacer(),
+                    );
+                  }
+                ),
 
                 // Version Info
                 Column(

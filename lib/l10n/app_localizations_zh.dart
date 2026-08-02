@@ -103,4 +103,73 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get system => '系统';
+
+  @override
+  String get muslimMode => '穆斯林模式';
+
+  @override
+  String get muslimModeSubtitle => '显示祈祷时间和宣礼';
+
+  @override
+  String get location => '位置';
+
+  @override
+  String get tapToDetect => '点击检测';
+
+  @override
+  String get detect => '检测';
+
+  @override
+  String get eyeCare => '眼部护理';
+
+  @override
+  String get prayerTimes => '祈祷时间';
+
+  @override
+  String get fajr => '晨礼 (Fajr)';
+
+  @override
+  String get sunrise => '日出';
+
+  @override
+  String get dhuhr => '晌礼 (Dhuhr)';
+
+  @override
+  String get asr => '晡礼 (Asr)';
+
+  @override
+  String get maghrib => '昏礼 (Maghrib)';
+
+  @override
+  String get isha => '宵礼 (Isha)';
+
+  @override
+  String get nextPrayer => '下一次';
+
+  @override
+  String get locationDisabled => '位置已禁用';
+
+  @override
+  String get enableLocationPrompt => '请在系统设置中启用定位服务以检测您的准确城市。';
+
+  @override
+  String get openSettings => '打开设置';
+
+  @override
+  String get timeForPrayer => '祈祷时间';
+
+  @override
+  String get stopAdhan => '停止宣礼';
+
+  @override
+  String get adhanIsPlaying => '正在播放宣礼';
+
+  @override
+  String get discoverIslam => '探索伊斯兰教';
+
+  @override
+  String get discoverIslamSubtitle => '了解伊斯兰教的简要指南';
+
+  @override
+  String get pastPrayer => '已过';
 }

@@ -104,4 +104,73 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get system => 'システム';
+
+  @override
+  String get muslimMode => 'イスラムモード';
+
+  @override
+  String get muslimModeSubtitle => '祈りの時間とアザーンを表示する';
+
+  @override
+  String get location => '場所';
+
+  @override
+  String get tapToDetect => 'タップして検出';
+
+  @override
+  String get detect => '検出';
+
+  @override
+  String get eyeCare => 'アイケア';
+
+  @override
+  String get prayerTimes => '祈りの時間';
+
+  @override
+  String get fajr => 'ファジル';
+
+  @override
+  String get sunrise => '日の出';
+
+  @override
+  String get dhuhr => 'ズフル';
+
+  @override
+  String get asr => 'アスル';
+
+  @override
+  String get maghrib => 'マグリブ';
+
+  @override
+  String get isha => 'イシャ';
+
+  @override
+  String get nextPrayer => '次';
+
+  @override
+  String get locationDisabled => '位置情報が無効です';
+
+  @override
+  String get enableLocationPrompt => '正確な都市を検出するためにシステム設定で位置情報サービスを有効にしてください。';
+
+  @override
+  String get openSettings => '設定を開く';
+
+  @override
+  String get timeForPrayer => '祈りの時間';
+
+  @override
+  String get stopAdhan => 'アザーンを停止';
+
+  @override
+  String get adhanIsPlaying => 'アザーンが再生中です';
+
+  @override
+  String get discoverIslam => 'イスラム教を発見する';
+
+  @override
+  String get discoverIslamSubtitle => 'イスラム教を理解するための簡単なガイド';
+
+  @override
+  String get pastPrayer => '経過';
 }

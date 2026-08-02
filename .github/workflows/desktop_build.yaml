@@ -2,8 +2,9 @@ name: Create Github Release
 on:
   workflow_dispatch:
 
-# Declare default permissions as read only.
-permissions: read-all
+# Grant write permissions for release creation and asset uploading
+permissions:
+  contents: write
 
 jobs:
   draft-release:
@@ -11,20 +12,22 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
+      version_name: ${{ steps.version.outputs.version_name }}
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Dart Language
-        uses: dart-lang/setup-dart@v1.3
+        uses: dart-lang/setup-dart@v1
       - name: Get Project Version
-        run: "dart workflows_utils/get_project_version.dart"
+        id: version
+        run: dart workflows_utils/get_project_version.dart
       - name: Draft release with release notes
         id: create_release
-        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
+        uses: softprops/action-gh-release@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN || secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.version_name }}
+          tag_name: ${{ steps.version.outputs.version_name }}
           prerelease: false
           generate_release_notes: true
 
@@ -66,12 +69,12 @@ jobs:
         if: matrix.target == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev
+          sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 
       - run: flutter doctor -v
       # Checkout Taline code, recreate missing files, and get packages.
       - name: Checkout Taline code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        uses: actions/checkout@v4
       - run: flutter create .
       - run: flutter pub get
       - name: install linux requirements for local_notifier package
@@ -93,7 +96,7 @@ jobs:
         run: tar czf $GITHUB_WORKSPACE/Taline${{ matrix.target }}.tar.gz *
         working-directory: ${{ matrix.build_path }}
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
       - name: Convert build to dmg for macOS
         if: matrix.target == 'macOS'
         run: npm install -g appdmg
@@ -108,11 +111,9 @@ jobs:
       # Upload the build.
       - name: Add packaged build to release draft
         id: upload_release_asset
-        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5
+        uses: softprops/action-gh-release@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN || secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ needs.draft-release.outputs.upload_url }}
-          asset_path: ./Taline${{ matrix.target }}${{ matrix.asset_extension }}
-          asset_name: Taline${{ matrix.target }}${{ matrix.asset_extension }}
-          asset_content_type: ${{ matrix.asset_content_type }}
+          tag_name: ${{ needs.draft-release.outputs.version_name }}
+          files: ./Taline${{ matrix.target }}${{ matrix.asset_extension }}

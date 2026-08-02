@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:local_notifier/local_notifier.dart';
+import 'package:eyes_care/services/prayer_service.dart';
 
 import 'package:eyes_care/countdown_screen.dart';
 import 'package:eyes_care/l10n/app_localizations.dart';
@@ -41,9 +43,11 @@ Future<void> loadLanguage() async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await windowManager.ensureInitialized();
+  await localNotifier.setup(appName: 'Taline');
   await loadThemeMode();
   await loadLanguage();
   await initLaunchStartup();
+  await PrayerService().init();
   runApp(const CareYourEyes());
 }
 
